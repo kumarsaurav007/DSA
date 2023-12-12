@@ -1,0 +1,13 @@
+"""
+1 2 3 
+1 2 3 
+1 2 3 
+"""
+
+n = 3
+for i in range(n):
+    p=1
+    for j in range(n):
+        print(p,end=" ")
+        p+=1
+    print()
