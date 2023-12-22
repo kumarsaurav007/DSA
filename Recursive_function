@@ -1,0 +1,14 @@
+# sum of n natural number using recursive function:-
+
+while True:
+    def sum(n):
+        if n ==0:
+            return 0
+        else:
+            answer=n+sum(n-1)
+            return answer
+    n = int(input("Enter a number: "))
+    print("Answer:",sum(n))
+    repeat = input("Wanna try again? (yes/no): ").lower()
+    if repeat != 'yes':
+        break
