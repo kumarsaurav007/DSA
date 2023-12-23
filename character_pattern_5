@@ -1,0 +1,13 @@
+"""
+A B C 
+B C D 
+C D E 
+"""
+
+n=3
+p=65
+for i in range(n):
+    for j in range(n):
+        print(chr(p+j), end=" ")
+    p+=1
+    print()
