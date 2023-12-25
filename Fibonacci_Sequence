@@ -1,0 +1,17 @@
+nth_term = int(input("Enter a number: "))
+n1 = 0
+n2 = 1
+sum = 0
+
+if nth_term <= 0:
+    print("Enter a positive number.")
+elif nth_term == 1:
+    print(n1)
+else:
+    print("Fibonacci Sequence:")
+    while sum < nth_term:
+        print(n1)
+        nth = n1+n2
+        n1 = n2
+        n2 = nth
+        sum +=1
