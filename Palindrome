@@ -1,0 +1,7 @@
+var = str(input("Enter a number/string:"))
+rev = var[::-1]
+print(f'Reverse:{rev}')
+if var == rev:
+    print("Given number/string is palindrome.")
+else:
+    print("Given number/string is not palindrome")
