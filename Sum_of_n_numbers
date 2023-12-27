@@ -1,0 +1,11 @@
+def sum_of_n_number(n):
+    if n < 0:
+        return 'Enter a positive number.'
+    else:
+        sum = 0
+        while n > 0:
+            sum = sum+n
+            n-=1
+        return sum
+n =int(input("Enter a number: "))
+print('Result:',sum_of_n_number(n))
