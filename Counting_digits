@@ -1,0 +1,5 @@
+def count_digit(n):
+    number= str(n)
+    return len(number)
+n = int(input("Enter your value:"))
+print(f'Number of digits in your value is = {count_digit(n)}')
