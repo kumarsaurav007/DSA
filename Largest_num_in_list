@@ -1,0 +1,6 @@
+List = [ ]
+N = int(input("Total numbers in list: "))
+for i in range(N):
+    Number = int(input("Enter number: "))
+    List.append(Number)
+print(f"Largest number in list is {max(List)}.")
