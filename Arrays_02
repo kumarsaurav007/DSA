@@ -1,0 +1,8 @@
+# Access individual elements through indexes.
+
+myArray = array("i",[1,2,3,4,5,])
+print(myArray[0])
+print(myArray[1])
+print(myArray[2])
+print(myArray[3])
+print(myArray[4])
