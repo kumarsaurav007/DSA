@@ -1,0 +1,6 @@
+# Extend array using extend() method.
+
+myArray = array("i",[1,2,3,4,5])
+myArray1 = array ("i", [6,7,8])
+myArray.extend(myArray1)
+print(myArray
