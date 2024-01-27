@@ -1,0 +1,5 @@
+#10 Reverse an array using reverse() method.
+
+myArray = array("i",[1,2,3,4,5])
+myArray.reverse()
+print(myArray)
