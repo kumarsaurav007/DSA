@@ -1,0 +1,4 @@
+#Get array buffer information through buffer_info() method.
+
+myArray = array("i",[1,2,3,4,5])
+print(myArray.buffer_info())
