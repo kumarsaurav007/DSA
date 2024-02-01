@@ -1,0 +1,8 @@
+# Check number of occurences of an element using count() method.
+
+myArray = array("i",[1,2,3,4,5,5,3,5,2,2,3,3])
+print(myArray.count(1))
+print(myArray.count(2))
+print(myArray.count(3))
+print(myArray.count(4))
+print(myArray.count(5))
