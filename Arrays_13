@@ -1,0 +1,4 @@
+# Conver array into list using tolist() method.
+
+myArray = array("i",[1,2,3,4,5])
+print(myArray.tolist())
