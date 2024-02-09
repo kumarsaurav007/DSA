@@ -1,0 +1,7 @@
+# Max product of two integer in array:
+
+arr = [1,5,7,9,4,3]
+def maxProduct(arr):
+    arr.sort(reverse = True)
+    return arr[0]*arr[1]
+print(maxProduct(arr))
