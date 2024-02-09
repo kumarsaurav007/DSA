@@ -1,0 +1,9 @@
+# Missing number:
+
+def missing_number(arr,n):#n = number of elements
+    total = n*(n+1)//2
+    sum_arr = sum(arr)
+    missingNum = total - sum_arr
+    return missingNum
+arr = [1,2,3,5,6,7,8,9]
+print(missing_number(arr,9))
