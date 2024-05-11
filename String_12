@@ -1,0 +1,11 @@
+#Capitalize the Title:-
+
+def capitalizeTitle(title):
+        words = title.split(" ")
+        output = ""
+        for i in words:
+            if len(i)>=3:
+                output += (i[0].upper()+i[1:].lower()+ " ")
+            else:
+                output +=(i.lower()+ " ")
+        return output.strip(" ")
