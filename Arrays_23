@@ -1,0 +1,11 @@
+# Maximum Gap :-
+
+def maximumGap(self, nums: List[int]) -> int:
+        output = []
+        n = sorted(nums)
+        if len(n) < 2:
+            return 0
+        else:
+            for i in range(len(n)-1):
+                output.append(n[i+1] - n[i])
+        return max(output)
