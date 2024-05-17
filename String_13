@@ -1,0 +1,9 @@
+# Length of Last Word :-
+
+def lengthOfLastWord(self, s: str) -> int:
+        words = []
+        for i in s.split():
+            if i != "":
+                words.append(i)
+        output = words[-1]
+        return(len(output))
