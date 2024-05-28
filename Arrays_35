@@ -1,0 +1,7 @@
+# Neither Minimum nor Maximum :-
+
+def findNonMinOrMax(self, nums: List[int]) -> int:
+        res = sorted(nums)
+        if len(nums)<=2:
+            return -1
+        return res[1]
