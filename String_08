@@ -1,0 +1,10 @@
+#Maximum Value of a String in an Array:-
+
+def maximumValue(strs):
+        output = 0
+        for i in strs:
+            if i.isdigit():
+                output = max(output,int(i))
+            else:
+                output = max(output,len(i))
+        return output

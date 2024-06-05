@@ -1,0 +1,11 @@
+#Count Prefixes of a Given String:-
+
+def countPrefixes(words, s):
+        output = 0
+        for i in words:
+            count = 0
+            while count < len(i) and count < len(s) and i[count] == s[count]:
+                count+=1
+            if count == len(i):
+                output+=1
+        return output

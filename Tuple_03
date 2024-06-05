@@ -1,0 +1,7 @@
+#Concatenate
+
+def concatenate_strings(input_tuple):
+    result = ' '.join (input_tuple)
+    return result
+input_tuple = ('Hello', 'World', 'from', 'Python')
+print(concatenate_strings(input_tuple))

@@ -1,0 +1,7 @@
+#Replace All Digits with Characters:-
+
+def replaceDigits(s):
+        output = list(s)
+        for i in range(1,len(output),2):
+            output[i] = chr(ord(output[i-1]) + int(output[i]))
+        return ''.join(output)

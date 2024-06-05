@@ -1,0 +1,9 @@
+def transpose(matrix):
+    rows, columns = len(matrix), len(matrix[0])
+    Result = [[0 for _ in range(rows)] for _ in range(columns)]
+    for i in range(rows):
+        for j in range(columns):
+            Result[j][i] = matrix[i][j]
+    return Result
+matrix = [[1,2,3],[4,5,6]]
+print(transpose(matrix))

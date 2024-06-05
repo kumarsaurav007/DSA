@@ -1,0 +1,14 @@
+#Self Dividing Numbers:-
+
+def selfDividingNumbers(left,right):
+        result = []
+        for i in range(left, right+1):
+            s = str(i)
+            if '0' in s:
+                continue
+            result.append(i)
+            for j in s:
+                if i % int(j) != 0:
+                    result.pop()
+                    break
+        return result
