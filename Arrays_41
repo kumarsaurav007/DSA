@@ -1,0 +1,9 @@
+# Third Maximum Number :-
+
+def thirdMax(self, nums: List[int]) -> int:
+        nums = list(set(nums))
+        if len(nums) < 3:
+            return max(nums)
+        nums = sorted(nums)
+        res = nums[::-1]
+        return res[2]
