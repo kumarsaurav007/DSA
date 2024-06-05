@@ -1,0 +1,11 @@
+# Number of Arithmetic Triplets :-
+
+def arithmeticTriplets(self, nums: List[int], diff: int) -> int:
+        nums = list(set(nums))
+        count = 0
+        for i in nums:
+            j = diff + i
+            k = diff + j
+            if j in nums and k in nums:
+                count+=1
+        return count
