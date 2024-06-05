@@ -1,4 +1,4 @@
-# Find K Closest Elements :-
+# Find K Closest Elements:-
 
 def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
         i = 0
