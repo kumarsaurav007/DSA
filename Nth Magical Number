@@ -1,0 +1,16 @@
+def nthMagicalNumber(self, n: int, a: int, b: int) -> int:
+        mod = 10**9 + 7
+        def lcm(x, y):
+            from math import gcd
+            return x*y//gcd(x,y)
+        low = min(a, b)
+        high = n*min(a, b)
+        lcm_ab = lcm(a, b)
+        while low < high:
+            mid = (low + high) // 2
+            count = mid//a + mid//b - mid//lcm_ab
+            if count < n:
+                low = mid+1
+            else:
+                high = mid
+        return low % mod
