@@ -1,0 +1,13 @@
+def singleNumber(self, nums: List[int]) -> List[int]:
+        x = 0
+        y = 0
+        xor = 0
+        for i in range(len(nums)):
+            xor = xor^nums[i]
+        set_bit = xor &~ (xor-1)
+        for i in range(len(nums)):
+            if nums[i] & set_bit == 0:
+                x = x ^ nums[i]
+            else:
+                y = y ^ nums[i]
+        return [x,y]
