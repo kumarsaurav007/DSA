@@ -1,0 +1,17 @@
+# Generate Parentheses :-
+
+def generateParenthesis(self, n: int) -> List[str]:
+        res = []
+        close = 0
+        open = 0
+        s = ''
+        def Recursion(open, close, s):
+            if len(s) == n*2:
+                res.append(s)
+                return
+            if open < n:
+                Recursion(open+1, close, s+'(')
+            if open > close:
+                Recursion(open, close+1, s+')')
+        Recursion(open, close, s)
+        return res
