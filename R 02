@@ -1,0 +1,12 @@
+# Subsets :-
+
+def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        def getSubset(nums, res, start, path):
+            res.append(path.copy())
+            for i in range(start, len(nums)):
+                path.append(nums[i])
+                getSubset(nums, res, i+1, path)
+                path.pop()
+        getSubset(nums, res, 0, [])
+        return res
