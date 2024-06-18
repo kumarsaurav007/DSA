@@ -1,0 +1,15 @@
+# Subsets II :-
+
+def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        nums.sort()
+        def getSubset(nums, res, start, temp):
+            res.append(temp.copy())
+            for i in range(start, len(nums)):
+                if i > start and nums[i] == nums[i-1]:
+                    continue
+                temp.append(nums[i])
+                getSubset(nums, res, i+1, temp)
+                temp.pop()
+        getSubset(nums, res, 0, [])
+        return res
