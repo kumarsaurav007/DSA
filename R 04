@@ -1,0 +1,19 @@
+# Permutations :-
+
+def permute(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        
+        def newPermute(res, temp, nums):
+            if len(temp) == len(nums):
+                res.append(temp.copy())
+                
+            for i in range(0, len(nums)):
+                if nums[i] in temp:
+                    continue
+                temp.append(nums[i])
+                newPermute(res, temp, nums)
+                temp.pop()
+        newPermute(res, [], nums)
+        return res   
+
+
