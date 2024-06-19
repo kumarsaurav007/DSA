@@ -1,0 +1,16 @@
+# Combination Sum:-
+
+def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        res = []
+        candidates.sort()
+        def SumCombination(candidates, target, res, start, temp):
+            if target < 0:
+                return
+            elif target == 0:
+                res.append(temp.copy())
+            for i in range(start, len(candidates)):
+                temp.append(candidates[i])
+                SumCombination(candidates, target - candidates[i], res, i, temp)
+                temp.pop()
+        SumCombination(candidates, target, res, 0, [])
+        return res
