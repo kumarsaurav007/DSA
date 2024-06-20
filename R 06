@@ -1,0 +1,18 @@
+# Combination Sum III :-
+
+def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        res = []
+        def funC(k, res, temp, n, start):
+            if n < 0:
+                return
+            if n == 0 and len(temp) == k:
+                res.append(temp.copy())
+                return
+            if len(temp) == k:
+                return
+            for i in range(start, 9):
+                temp.append(i+1)
+                funC(k, res, temp, n-(i+1), i+1)
+                temp.pop()
+        funC(k, res, [], n, 0)
+        return res
