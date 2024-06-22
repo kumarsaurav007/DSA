@@ -1,0 +1,59 @@
+# N-Queens II :-
+
+def __init__(self):
+        self.sol = 0
+
+    def totalNQueens(self, n: int) -> int:
+        board = [[False for _ in range(n)] for _ in range(n)]
+        self.funC(board, n, 0)
+        return self.sol
+
+    def funC(self, board, n, row):
+        if row == n:
+            self.sol+=1
+            return
+        for col in range(0, n):
+            board[row][col] = True
+            if self.isValid(board, n, row, col):
+                self.funC(board, n, row+1)
+            board[row][col] = False
+        return
+
+    def isValid(self, board, n, row, col):
+        for i in range(0, n):
+            if i!=col and board[row][i]:
+                return False
+            if i!=row and board[i][col]:
+                return False
+        tr = row + 1
+        tc = col + 1
+        while tr < n and tc < n:
+            if board[tr][tc]:
+                return False
+            tr+=1 
+            tc+=1
+        
+        tr = row - 1
+        tc = col - 1
+        while tr >= 0 and tc >= 0:
+            if board[tr][tc]:
+                return False
+            tr-=1
+            tc-=1
+
+        tr = row - 1
+        tc = col + 1
+        while tr >= 0 and tc < n:
+            if board[tr][tc]:
+                return False
+            tr-=1
+            tc+=1
+
+        tr = row + 1
+        tc = col - 1
+        while tr < n and tc >=0:
+            if board[tr][tc]:
+                return False
+            tr+=1
+            tc-=1
+        return True
