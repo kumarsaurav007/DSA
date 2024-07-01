@@ -1,0 +1,10 @@
+# Two Sum :-
+
+def twoSum(self, nums: List[int], target: int) -> List[int]:
+        dictionary = {}
+        for i in range(len(nums)):
+            num = nums[i]
+            comp = target - num
+            if comp in dictionary:
+                return [dictionary[comp], i]
+            dictionary[num] = i
