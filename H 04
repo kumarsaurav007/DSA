@@ -1,0 +1,20 @@
+# Merge Two 2D Arrays by Summing Values :-
+
+def mergeArrays(self, nums1: List[List[int]], nums2: List[List[int]]) -> List[List[int]]:
+        merged_map = {}
+        for id_val in nums1:
+            id, val = id_val
+            if id in merged_map:
+                merged_map[id] += val
+            else:
+                merged_map[id] = val
+
+        for id_val in nums2:
+            id, val = id_val
+            if id in merged_map:
+                merged_map[id] += val
+            else:
+                merged_map[id] = val
+
+        result = [[id, val] for id, val in sorted(merged_map.items())]
+        return result
