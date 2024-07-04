@@ -1,0 +1,18 @@
+# Palindrome Pairs :-
+
+def palindromePairs(self, words: List[str]) -> List[List[int]]:
+        reversed_words = {word[::-1]: i for i, word in enumerate(words)}
+        result = []
+
+        for i, word in enumerate(words):
+            for j in range(len(word)+1):
+                prefix, suffix = word[:j], word[j:]
+                if prefix == prefix[::-1] and suffix in reversed_words and reversed_words[suffix] != i:
+                    if reversed_words[suffix] != i:
+                        result.append([reversed_words[suffix], i])
+
+                if j != len(word) and suffix == suffix[::-1] and prefix in reversed_words and reversed_words[prefix] != i:
+                    if reversed_words[prefix] != i:
+                        result.append([i, reversed_words[prefix]])
+
+        return result
