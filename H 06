@@ -1,0 +1,18 @@
+# Contiguous Array :-
+
+def findMaxLength(self, nums: List[int]) -> int:
+        ans = 0
+        current_sum = 0
+        new_map = {}
+        for i in range(len(nums)):
+            if nums[i] == 0:
+                current_sum-=1
+            else:
+                current_sum+=nums[i]
+            if current_sum == 0:
+                ans = i+1
+            if current_sum in new_map:
+                ans = max(ans, i-new_map[current_sum])
+            else:
+                new_map[current_sum] = i
+        return ans 
