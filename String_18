@@ -1,0 +1,14 @@
+# Removing Stars From a String :-
+
+def removeStars(self, s: str) -> str:
+        low = 0
+        high = 0
+        nums = list(s)
+        while high < len(s):
+            if nums[high] == "*":
+                low-=1
+            else:
+                nums[low] = nums[high]
+                low+=1
+            high+=1
+        return "".join(nums[:low])
