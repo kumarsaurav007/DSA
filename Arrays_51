@@ -1,0 +1,19 @@
+# Max Consecutive Ones III :-
+
+def longestOnes(self, nums: List[int], k: int) -> int:
+        flips = 0
+        ans = 0
+        l = 0
+        h = 0
+        n = len(nums)
+
+        while l < n:
+            if nums[l] == 0:
+                flips +=1
+            while flips > k:
+                if nums[h] == 0:
+                    flips-=1
+                h+=1
+            ans = max(ans, l-h+1)
+            l+=1
+        return ans
