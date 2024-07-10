@@ -1,0 +1,13 @@
+# Valid Palindrome II :-
+
+def validPalindrome(self, s: str) -> bool:
+        low = 0
+        high = len(s) - 1
+        while low <= high:
+            if s[low] != s[high]:
+                skip_left = s[low+1:high+1]
+                skip_right = s[low:high]
+                return skip_left == skip_left[::-1] or skip_right == skip_right[::-1]
+            low+=1
+            high-=1
+        return True
