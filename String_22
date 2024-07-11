@@ -1,0 +1,11 @@
+# Check If String Is a Prefix of Array :-
+
+def isPrefixString(self, s: str, words: List[str]) -> bool:
+        result = ''
+        for i in words:
+            result+=i
+            if result == s:
+                return True
+            if len(result) > len(s):
+                break
+        return False
