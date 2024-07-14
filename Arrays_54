@@ -1,0 +1,17 @@
+# Subarray Sum Equals K :-
+
+def subarraySum(self, nums: List[int], k: int) -> int:
+        new_map = {}
+        ans = 0
+        sum = 0
+        for i in range(len(nums)):
+            sum = sum+nums[i]
+            if sum == k:
+                ans+=1
+            if sum-k in new_map:
+                ans+=new_map[sum-k]
+            if sum in new_map:
+                new_map[sum]+=1
+            else:
+                new_map[sum] = 1
+        return ans
