@@ -1,0 +1,14 @@
+# Valid Parentheses :-
+
+def isValid(self, s: str) -> bool:
+        st = []
+        for temp in s:
+            if temp in ['(', '{', '[']:
+                st.append(temp)
+            else:
+                if not st:
+                    return False
+                top = st.pop()
+                if (top == '(' and temp != ')') or (top =='{' and temp != '}') or (top == '[' and temp != ']'):
+                    return False
+        return not st
