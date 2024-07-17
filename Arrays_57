@@ -1,0 +1,18 @@
+# Best Time to Buy and Sell Stock :-
+
+def maxProfit(self, prices: List[int]) -> int:
+        n = len(prices)
+        if n <= 1:
+            return 0
+
+        ans = prices[1] - prices[0]
+        minEle = prices[0]
+        for i in range(1, n):
+            if prices[i] - minEle > ans:
+                ans = prices[i] - minEle
+            if prices[i] < minEle:
+                minEle = prices[i]
+
+        if ans < 0:
+            return 0
+        return ans
