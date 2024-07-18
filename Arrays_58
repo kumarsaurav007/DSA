@@ -1,0 +1,33 @@
+# Meeting Rooms III :-
+
+def mostBooked(self, n: int, meetings: List[List[int]]) -> int:
+        endTime = [0]*n
+        count = [0]*n
+        meetings.sort()
+        for i in range(len(meetings)):
+            start = meetings[i][0]
+            end = meetings[i][1]
+            flag = False
+            Min = float('inf')
+            minIndex = -1
+
+            for j in range(n):
+                if endTime[j] < Min:
+                    Min = endTime[j]
+                    minIndex = j
+                if endTime[j] <= start:
+                    endTime[j] = end
+                    count[j] += 1
+                    flag = True
+                    break
+            if not flag:
+                count[minIndex] += 1
+                endTime[minIndex] += end - start
+        
+        Max = -float('inf')
+        ans = -1
+        for i in range(n):
+            if count[i] > Max:
+                Max = count[i]
+                ans = i
+        return ans
