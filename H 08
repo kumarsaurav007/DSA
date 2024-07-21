@@ -1,0 +1,11 @@
+# Card Flipping Game :-
+
+def flipgame(self, fronts: List[int], backs: List[int]) -> int:
+        front_set = set()
+        back_set = set()
+        for f,b in zip(fronts, backs):
+            front_set.add(f)
+            front_set.add(b)
+            if f==b:
+                back_set.add(f)
+        return min(front_set - back_set,default= 0)
