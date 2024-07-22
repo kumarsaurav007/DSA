@@ -1,0 +1,19 @@
+# K-diff Pairs in an Array :-
+
+def findPairs(self, nums: List[int], k: int) -> int:
+        ans = 0
+        new_dict = {}
+        for i in nums:
+            if i in new_dict:
+                new_dict[i]+=1
+            else:
+                new_dict[i] = 1
+        if k > 0:
+            for i in new_dict.keys():
+                if i+k in new_dict:
+                    ans+=1
+        else:
+            for j in new_dict.values():
+                if j > 1:
+                    ans+=1
+        return ans
