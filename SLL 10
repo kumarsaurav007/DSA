@@ -1,0 +1,18 @@
+# Intersection of Two Linked Lists :-
+
+def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        if headA == None or headB == None:
+            return None
+        curr1 = headA
+        curr2 = headB
+        while curr1 != curr2:
+            if curr1 == None:
+                curr1 = headB
+            else:
+                curr1 = curr1.next
+            if curr2 == None:
+                curr2 = headA
+            else:
+                curr2 = curr2.next
+        return curr1
+        
