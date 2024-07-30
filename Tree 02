@@ -1,0 +1,13 @@
+# Binary Tree Preorder Traversal :-
+
+def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        def Inorder(root, ans):
+            if root == None:
+                return
+            ans.append(root.val)
+            Inorder(root.left, ans)
+            Inorder(root.right, ans)
+
+        ans = []
+        Inorder(root, ans)
+        return ans
