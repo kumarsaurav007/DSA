@@ -1,0 +1,14 @@
+# Binary Tree Postorder Traversal :-
+
+def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        def Inorder(root, ans):
+            if root == None:
+                return
+            
+            Inorder(root.left, ans)
+            Inorder(root.right, ans)
+            ans.append(root.val)
+
+        ans = []
+        Inorder(root, ans)
+        return ans
