@@ -1,0 +1,13 @@
+# Sum of Left Leaves :-
+
+def sumOfLeftLeaves(self, root: Optional[TreeNode]) -> int:
+        def leftLeaf(root):
+            if root == None:
+                return
+            if root.left != None and root.left.left == None and root.left.right == None:
+                ans[0] += root.left.val
+            leftLeaf(root.left)
+            leftLeaf(root.right)
+        ans = [0]
+        leftLeaf(root)
+        return ans[0]
