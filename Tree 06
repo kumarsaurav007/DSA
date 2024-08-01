@@ -1,0 +1,16 @@
+# Leaf-Similar Trees :-
+
+def leafSimilar(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
+        def funC(root, listt):
+            if root == None:
+                return
+            if root.left == None and root.right == None:
+                listt.append(root.val)
+            funC(root.left, listt)
+            funC(root.right, listt)
+        list1 = []
+        funC(root1, list1)
+        list2 = []
+        funC(root2, list2)
+
+        return list1 == list2
