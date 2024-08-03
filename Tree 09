@@ -1,0 +1,22 @@
+# Binary Tree Level Order Traversal :-
+
+def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        res = []
+        if root == None:
+            return res
+
+        q = []
+        q.append(root)
+        while q:
+            level = []
+            levelSize = len(q)
+            for i in range(0, levelSize):
+                element = q.pop(0)
+                level.append(element.val)
+
+                if element.left != None:
+                    q.append(element.left)
+                if element.right != None:
+                    q.append(element.right)
+            res.append(level)
+        return res
