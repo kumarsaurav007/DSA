@@ -1,0 +1,15 @@
+# Diameter of Binary Tree :-
+
+def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        self.diameter = 0
+        self.Dfs(root)
+        return self.diameter
+
+    def Dfs(self, root):
+        if root == None:
+            return 0
+        else:
+            l = self.Dfs(root.left)
+            r = self.Dfs(root.right)
+        self.diameter = max(self.diameter, l+r)
+        return max(l, r) + 1
