@@ -1,0 +1,13 @@
+# Largest Rectangle in Histogram :-
+
+def largestRectangleArea(self, heights: List[int]) -> int:
+        stack = []
+        res = 0
+        for i in heights + [-1]:
+            step = 0
+            while stack and stack[-1][1] >= i:
+                w, h = stack.pop()
+                step += w
+                res = max(res, step * h)
+            stack.append((step + 1, i))
+        return res
