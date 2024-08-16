@@ -1,0 +1,29 @@
+# Binary Tree Zigzag Level Order Traversal :-
+
+def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+
+        result = []
+        queue = [root]
+        left_to_right = True
+
+        while queue:
+            level_values = []
+            next_queue = []
+
+            for node in queue:
+                level_values.append(node.val)
+                if node.left:
+                    next_queue.append(node.left)
+                if node.right:
+                    next_queue.append(node.right)
+
+            if not left_to_right:
+                level_values.reverse()
+
+            result.append(level_values)
+            queue = next_queue
+            left_to_right = not left_to_right
+
+        return result
