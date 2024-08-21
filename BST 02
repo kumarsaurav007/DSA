@@ -1,0 +1,15 @@
+# Validate Binary Search Tree :-
+
+def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        def inorder(root):
+            if root == None:
+                return
+            inorder(root.left)
+            if prev_val[0] >= root.val:
+                ans[0] = False
+            prev_val[0] = root.val
+            inorder(root.right)
+        prev_val = [float('-inf')]
+        ans = [True]
+        inorder(root)
+        return ans[0]
