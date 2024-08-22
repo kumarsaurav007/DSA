@@ -1,0 +1,19 @@
+# Flatten Binary Tree to Linked List :-
+
+def flatten(self, root: Optional[TreeNode]) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        def helper(root):
+            if root == None:
+                return None
+            if root.left == None and root.right == None:
+                return root
+            left = helper(root.left)
+            right = helper(root.right)
+            if left != None:
+                left.right = root.right
+                root.right = root.left
+                root.left = None
+            return right if right is not None else left
+        helper(root)
