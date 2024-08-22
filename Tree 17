@@ -1,0 +1,13 @@
+# Binary Tree Maximum Path Sum :-
+
+def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        def postorder(root):
+            if root == None:
+                return 0
+            left = max(postorder(root.left), 0)
+            right = max(postorder(root.right), 0)
+            ans[0] = max(ans[0], left+right+root.val)
+            return max(left, right) + root.val
+        ans = [float('-inf')]
+        postorder(root)
+        return ans[0]
