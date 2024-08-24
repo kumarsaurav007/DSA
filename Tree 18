@@ -1,0 +1,15 @@
+# Populating Next Right Pointers in Each Node :-
+
+def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if root == None:
+            return root
+        leftmost = root
+        while leftmost.left != None:
+            head = leftmost
+            while head != None:
+                head.left.next = head.right
+                if head.next != None:
+                    head.right.next = head.next.left
+                head = head.next
+            leftmost = leftmost.left
+        return root
