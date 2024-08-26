@@ -1,0 +1,12 @@
+# N-ary Tree Postorder Traversal :-
+
+def postorder(self, root: 'Node') -> List[int]:
+        def traverse(root):
+            if root == None:
+                return
+            for i in root.children:
+                traverse(i)
+            ans.append(root.val)
+        ans = []
+        traverse(root)
+        return ans
