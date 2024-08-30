@@ -1,0 +1,38 @@
+# Longest Common Prefix :-
+
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        trie = Trie()
+        for word in strs:
+            trie.insert(word)
+        return trie.search()
+
+class Node:
+    def __init__(self):
+        self.child = {}
+        self.isend = False
+
+class Trie:
+    def __init__(self):
+        self.root = Node()
+
+    def insert(self, word):
+        root = self.root
+        for char in word:
+            if char not in root.child:
+                root.child[char] = Node()
+            root = root.child[char]
+        root.isend = True
+
+    def search(self):
+        root = self.root
+        ans = ''
+        while True:
+            if len(root.child) != 1 or root.isend:
+                break
+
+            char = next(iter(root.child))
+            ans += char
+            root = root.child[char]
+            
+        return ans
