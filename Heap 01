@@ -1,0 +1,9 @@
+# Kth Largest Element in an Array :-
+
+def findKthLargest(self, nums: List[int], k: int) -> int:
+        min_heap = PriorityQueue()
+        for i in nums:
+            min_heap.put(i)
+            if min_heap.qsize() > k:
+                min_heap.get()
+        return min_heap.get()
