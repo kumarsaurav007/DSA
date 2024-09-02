@@ -1,0 +1,18 @@
+# K Closest Points to Origin :-
+
+def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        max_heap = PriorityQueue()
+        for (x, y) in points:
+            dist = -(x*x + y*y)
+            if max_heap.qsize() == k:
+                if dist > max_heap.queue[0][0]:
+                    max_heap.get()
+                    max_heap.put((dist, x, y))
+            else:
+                max_heap.put((dist, x, y))
+        
+        result = []
+        while not max_heap.empty():
+            dist, x, y = max_heap.get()
+            result.append([x, y])
+        return result
