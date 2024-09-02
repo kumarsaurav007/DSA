@@ -1,0 +1,20 @@
+# Find Median from Data Stream :-
+
+from queue import PriorityQueue
+class MedianFinder:
+
+    def __init__(self):
+        self.min_heap = PriorityQueue()
+        self.max_heap = PriorityQueue()
+
+    def addNum(self, num: int) -> None:
+        self.max_heap.put(-num)
+        self.min_heap.put(-self.max_heap.get())
+        if self.min_heap.qsize() > self.max_heap.qsize():
+            self.max_heap.put(-self.min_heap.get())
+
+    def findMedian(self) -> float:
+        if self.max_heap.qsize() == self.min_heap.qsize():
+            return (self.min_heap.queue[0] - self.max_heap.queue[0]) / 2.0
+        return - self.max_heap.queue[0]
+
