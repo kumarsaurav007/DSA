@@ -1,0 +1,19 @@
+# Minimum Number of Refueling Stops :-
+
+def minRefuelStops(self, target: int, startFuel: int, stations: List[List[int]]) -> int:
+        max_heap = PriorityQueue()
+        stations.append([target, 0])
+        fuel = startFuel
+        stops = 0
+        prev_position = 0
+
+        for position, fuel_at_station in stations:
+            fuel -= (position - prev_position)
+            while not max_heap.empty() and fuel < 0:
+                fuel += -max_heap.get()
+                stops += 1
+            if fuel < 0:
+                return -1
+            max_heap.put(-fuel_at_station)
+            prev_position = position
+        return stops
