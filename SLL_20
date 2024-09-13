@@ -1,0 +1,16 @@
+# Swap Nodes in Pairs :-
+
+def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0)
+        dummy.next = head
+        curr = dummy
+        while curr.next and curr.next.next:
+            p1 = curr.next
+            p2 = curr.next.next
+
+            p1.next = p2.next
+            p2.next = p1
+            curr.next = p2
+
+            curr = p1
+        return dummy.next
