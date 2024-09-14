@@ -1,0 +1,12 @@
+# Greatest Common Divisor of Strings :-
+
+def gcdOfStrings(self, str1: str, str2: str) -> str:
+        a, b = len(str1), len(str2)
+        while b:
+            a, b = b, a % b
+
+        result = str1[:a]
+        if result * (len(str1) // len(result)) == str1 and result * (len(str2) // len(result)) == str2:
+            return result
+        else:
+            return ""
