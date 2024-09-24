@@ -1,0 +1,21 @@
+# Find the Kth Smallest Sum of a Matrix With Sorted Rows :-
+
+def kthSmallest(self, mat: List[List[int]], k: int) -> int:
+        m, n = len(mat), len(mat[0])
+        min_heap = PriorityQueue()
+        min_heap.put((sum(row[0] for row in mat), [0]*m))
+        visited = set(tuple([0]*m))
+
+        for _ in range(k):
+            curr_sum, indices = min_heap.get()
+            for i in range(m):
+                if indices[i] + 1 < n:
+                    new_indices = indices[:]
+                    new_indices[i] += 1
+                    new_sum = curr_sum - mat[i][indices[i]] + mat[i][new_indices[i]]
+
+                    if tuple(new_indices) not in visited:
+                        visited.add(tuple(new_indices))
+                        min_heap.put((new_sum, new_indices))
+        
+        return curr_sum
