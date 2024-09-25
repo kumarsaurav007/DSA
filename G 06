@@ -1,0 +1,8 @@
+# Maximize Sum Of Array After K Negations :-
+
+def largestSumAfterKNegations(self, nums: List[int], k: int) -> int:
+        for i in range(k):
+            nums.sort()
+            nums[0] = -nums[0]
+        
+        return sum(nums)
