@@ -1,0 +1,16 @@
+# Path Sum II :-
+
+def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+        ans = []
+        if root == None:
+            return ans
+        if root.left == None and root.right == None and targetSum == root.val:
+            ans.append([root.val])
+        
+        left_path = self.pathSum(root.left, targetSum - root.val) 
+        right_path = self.pathSum(root.right, targetSum - root.val)
+
+        for i in (left_path + right_path):
+            ans.append([root.val] + i)
+        
+        return ans
