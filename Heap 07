@@ -1,0 +1,14 @@
+# Sliding Window Maximum :-
+
+def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        ans = []
+        max_heap = PriorityQueue()
+        for i in range(len(nums)):
+            max_heap.put((-nums[i], i))
+
+            while max_heap.queue[0][1] <= i-k:
+                max_heap.get()
+            
+            if i >= k-1:
+                ans.append(-max_heap.queue[0][0])
+        return ans
