@@ -1,0 +1,17 @@
+# Find Bottom Left Tree Value :-
+
+def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
+        queue = deque([root])
+        
+        while queue:
+            leftmost_value = queue[0].val
+            
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                if node.left:
+                    queue.append(node.left)
+                
+                if node.right:
+                    queue.append(node.right)
+        
+        return leftmost_value
