@@ -1,0 +1,31 @@
+# Minimum Jumps to Reach Home :-
+
+def minimumJumps(self, forbidden: List[int], a: int, b: int, x: int) -> int:
+        limit = max(6000, x + b, max(forbidden) + a + b) if forbidden else x + b
+        dp = [float('inf')] * (limit + 1)
+
+        forbidden_set = set(forbidden)
+        dp[0] = 0
+        
+        queue = [(0, False)]
+        visited = set([(0, False)])
+
+        while queue:
+            position, last_was_backward = queue.pop(0)
+            
+            if position == x:
+                return dp[position]
+
+            next_forward = position + a
+            if next_forward <= limit and next_forward not in forbidden_set and (next_forward, False) not in visited:
+                dp[next_forward] = dp[position] + 1
+                visited.add((next_forward, False))
+                queue.append((next_forward, False))
+
+            next_backward = position - b
+            if not last_was_backward and next_backward >= 0 and next_backward not in forbidden_set and (next_backward, True) not in visited:
+                dp[next_backward] = dp[position] + 1
+                visited.add((next_backward, True))
+                queue.append((next_backward, True))
+
+        return -1 if dp[x] == float('inf') else dp[x]
