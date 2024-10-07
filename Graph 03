@@ -1,0 +1,24 @@
+# Island Perimeter :-
+
+def islandPerimeter(self, grid: List[List[int]]) -> int:
+        perimeter = 0
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                perimeter += self.funC(grid, i ,j)
+        return perimeter
+
+  def funC(self, grid, i, j):
+        if grid[i][j] == 0:
+            return 0
+        r = len(grid)
+        c = len(grid[0])
+        edge = 0
+        if (i == r-1 or grid[i+1][j] == 0):
+            edge += 1
+        if (j == 0 or grid[i][j-1] == 0):
+            edge += 1
+        if (i == 0 or grid[i-1][j] == 0):
+            edge += 1
+        if (j == c-1 or grid[i][j+1] == 0):
+            edge += 1
+        return edge
