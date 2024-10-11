@@ -1,0 +1,26 @@
+# Longest Palindromic Substring :-
+
+def longestPalindrome(self, s: str) -> str:
+        m = len(s)
+        dp = [[0]*m for _ in range(m)]
+        start = 0
+        max_len = 1
+
+        for i in range(m):
+            dp[i][i] = 1
+        
+        for i in range(m-1):
+            if s[i] == s[i+1]:
+                dp[i][i+1] = 1
+                start = i
+                max_len = 2
+
+        for i in range(3, m+1):
+            for j in range(m-i+1):
+                x = j + i - 1
+                if s[j] == s[x] and dp[j+1][x-1]:
+                    dp[j][x] = 1
+                    start = j
+                    max_len = i
+        
+        return s[start:start+max_len]
