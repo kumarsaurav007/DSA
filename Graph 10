@@ -1,0 +1,24 @@
+# Course Schedule II :-
+
+def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        adj = [[] for _ in range(numCourses)]
+        indegree = [0] * numCourses
+
+        for course, prereq in prerequisites:
+            adj[prereq].append(course)
+            indegree[course] += 1
+
+        queue = deque([i for i in range(numCourses) if indegree[i] == 0])
+
+        ans = []
+        while queue:
+            current_course = queue.popleft()
+            ans.append(current_course)
+            for i in adj[current_course]:
+                indegree[i] -= 1
+                if indegree[i] == 0:
+                    queue.append(i)
+
+        if len(ans) == numCourses:
+            return ans
+        return [] 
