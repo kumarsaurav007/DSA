@@ -1,0 +1,9 @@
+# Minimum Average of Smallest and Largest Elements :-
+
+def minimumAverage(self, nums: List[int]) -> float:
+        res = []
+        while nums:
+            res.append((min(nums)+max(nums))/2)
+            nums.remove(min(nums))
+            nums.remove(max(nums))
+        return min(res)
