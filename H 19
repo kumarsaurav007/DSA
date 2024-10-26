@@ -1,0 +1,11 @@
+# Intersection of Multiple Arrays :-
+
+def intersection(self, nums: List[List[int]]) -> List[int]:
+        res = []
+        frequency = {}
+        for i in nums:
+            for j in i:
+                frequency[j] = frequency.get(j, 0) + 1
+                if frequency[j] == len(nums) and j not in res:
+                    res.append(j)
+        return sorted(res)
