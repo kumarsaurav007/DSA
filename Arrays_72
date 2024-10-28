@@ -1,0 +1,10 @@
+# Find the Width of Columns of a Grid:-
+
+def findColumnWidth(self, grid: List[List[int]]) -> List[int]:
+        output = []
+        for j in range(len(grid[0])):
+            len_ele = []
+            for i in range(len(grid)):
+                len_ele.append(len(str(grid[i][j])))
+            output.append(max(len_ele))
+        return output
