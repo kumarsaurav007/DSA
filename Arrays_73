@@ -1,0 +1,7 @@
+# Find Minimum Operations to Make All Elements Divisible by Three :-
+
+def minimumOperations(self, nums: List[int]) -> int:
+        output = 0
+        for i in nums:
+            output += min(i % 3, 3 - (i % 3))
+        return output 
