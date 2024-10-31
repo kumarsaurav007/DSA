@@ -1,0 +1,8 @@
+def xorOperation(self, n: int, start: int) -> int:
+        output = start
+        nums = [0]*n
+        for i in range(n):
+            nums[i] = start + 2 * i
+        for i in range(1, len(nums)):
+            output = output ^ nums[i]
+        return output
