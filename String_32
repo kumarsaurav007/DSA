@@ -1,0 +1,8 @@
+# Convert Date to Binary :-
+
+def convertDateToBinary(self, date: str) -> str:
+        year, month, date = date.split('-')
+        bin_year = bin(int(year))[2:]
+        bin_month = bin(int(month))[2:]
+        bin_date = bin(int(date))[2:]
+        return f"{bin_year}-{bin_month}-{bin_date}"
