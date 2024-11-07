@@ -1,0 +1,14 @@
+# Find a Corresponding Node of a Binary Tree in a Clone of That Tree :-
+
+def getTargetCopy(self, original: TreeNode, cloned: TreeNode, target: TreeNode) -> TreeNode:
+        if original is None:
+            return None
+        if original == target:
+            return cloned
+        left_root = self.getTargetCopy(original.left, cloned.left, target)
+        if left_root:
+            return left_root
+        right_root = self.getTargetCopy(original.right, cloned.right, target)
+        if right_root:
+            return right_root
+        return None
