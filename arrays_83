@@ -1,0 +1,10 @@
+# Final Array State After K Multiplication Operations I :-
+
+def getFinalState(self, nums: List[int], k: int, multiplier: int) -> List[int]:
+        for _ in range(k):
+            min_idx = 0
+            for i in range(len(nums)):
+                if nums[i] < nums[min_idx]:
+                    min_idx = i
+            nums[min_idx] *= multiplier
+        return nums
