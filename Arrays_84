@@ -1,0 +1,12 @@
+# Find the XOR of Numbers Which Appear Twice :-
+
+def duplicateNumbersXOR(self, nums: List[int]) -> int:
+        res = []
+        output = 0
+        for i in nums:
+            if i not in res:
+                res.append(i)
+            else:
+                output ^= i
+
+        return output
