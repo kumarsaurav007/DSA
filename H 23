@@ -1,0 +1,9 @@
+# Sum of Unique Elements :-
+
+def sumOfUnique(self, nums: List[int]) -> int:
+        freq = Counter(nums)
+        ans = 0
+        for num, count in freq.items():
+            if count == 1:
+                ans += num
+        return ans
