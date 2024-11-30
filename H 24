@@ -1,0 +1,12 @@
+# Uncommon Words from Two Sentences :-
+
+def uncommonFromSentences(self, s1: str, s2: str) -> List[str]:
+        freq1 = Counter(s1.split())
+        freq2 = Counter(s2.split())
+        freq = freq1 + freq2
+
+        ans = []
+        for key, value in freq.items():
+            if value == 1:
+                ans.append(key)
+        return ans
