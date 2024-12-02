@@ -1,0 +1,17 @@
+# Merge Nodes in Between Zeros :-
+
+def mergeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        curr = head.next
+        prev = head.next
+        ans = 0
+
+        while curr:
+            if curr.val != 0:
+                ans += curr.val
+            else:
+                prev.val = ans
+                prev.next = curr.next
+                prev = prev.next
+                ans = 0
+            curr = curr.next
+        return head.next
