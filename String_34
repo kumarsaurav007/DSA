@@ -1,0 +1,11 @@
+# Make String a Subsequence Using Cyclic Increments :-
+
+def canMakeSubsequence(self, str1: str, str2: str) -> bool:
+        i, j = 0, 0
+        while i < len(str1) and j < len(str2):
+            current_char = str1[i]
+            incremented_char = chr((ord(current_char) - ord('a') + 1) % 26 + ord('a'))
+            if current_char == str2[j] or incremented_char == str2[j]:
+                j += 1
+            i += 1
+        return j == len(str2)
