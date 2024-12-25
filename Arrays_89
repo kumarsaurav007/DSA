@@ -1,0 +1,7 @@
+# Maximum Product Difference Between Two Pairs:-
+
+def maxProductDifference(self, nums: List[int]) -> int:
+        nums = sorted(nums)
+        max_prod = nums[len(nums)-1] * nums[len(nums)-2]
+        min_prod = nums[0] * nums[1]
+        return max_prod - min_prod
