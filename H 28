@@ -1,0 +1,8 @@
+# Kth Distinct String in an Array :-
+
+def kthDistinct(self, arr: List[str], k: int) -> str:
+        count = {}
+        for i in arr:
+            count[i] = count.get(i, 0) + 1
+        distinct = [i for i in arr if count[i] == 1]
+        return distinct[k -1] if k <= len(distinct) else ""
