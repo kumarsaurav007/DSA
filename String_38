@@ -1,0 +1,10 @@
+# Lexicographically Smallest Palindrome :-
+
+def makeSmallestPalindrome(self, s: str) -> str:
+        s = list(s)
+        n = len(s)
+        for i in range(n // 2):
+            j = n - i - 1
+            if s[i] != s[j]:
+                s[i] = s[j] = min(s[i], s[j])
+        return ''.join(s) 
