@@ -1,0 +1,12 @@
+# Unique Morse Code Words :-
+
+def uniqueMorseRepresentations(self, words: List[str]) -> int:
+        d = [".-","-...","-.-.","-..",".","..-.","--.","....","..",
+            ".---","-.-",".-..","--","-.","---",".--.","--.-",".-.",
+            "...","-","..-","...-",".--","-..-","-.--","--.."]
+
+        res = set()
+        for word in words:
+            output = ''.join(d[ord(char) - ord('a')] for char in word)
+            res.add(output)
+        return len(res)
