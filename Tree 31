@@ -1,0 +1,13 @@
+# N-ary Tree Preorder Traversal:-
+
+def preorder(self, root: 'Node') -> List[int]:
+        def traverse(root):
+            if root is None:
+                return
+            ans.append(root.val)
+            for i in root.children:
+                traverse(i)
+    
+        ans = []
+        traverse(root)
+        return ans
