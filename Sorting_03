@@ -1,0 +1,8 @@
+# Largest Number At Least Twice of Others :-
+
+def dominantIndex(self, nums: List[int]) -> int:
+        sorted_nums = sorted(nums)
+        n = len(sorted_nums)
+        if sorted_nums[n - 2] * 2 <= sorted_nums[n-1]:
+            return nums.index(sorted_nums[n-1])
+        return -1
