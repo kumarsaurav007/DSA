@@ -1,0 +1,16 @@
+# Shortest Distance to Target String in a Circular Array :-
+
+def closetTarget(self, words: List[str], target: str, startIndex: int) -> int:
+        if target not in words:
+            return -1
+
+        n = len(words)
+        target_indices = [i for i, word in enumerate(words) if word == target]
+        min_distance = float('inf')
+        for idx in target_indices:
+            clockwise_distance = (idx - startIndex) % n
+            counter_clockwise_distance = (startIndex - idx) % n
+            
+            min_distance = min(min_distance, clockwise_distance, counter_clockwise_distance)
+    
+        return min_distance
