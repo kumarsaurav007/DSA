@@ -1,0 +1,10 @@
+# String Matching in an Array :-
+
+def stringMatching(self, words: List[str]) -> List[str]:
+        result = []
+        for i in words:
+            for j in words:
+                if len(i) < len(j) and i in j:
+                    result.append(i)
+                    break
+        return result
