@@ -1,0 +1,25 @@
+# Word Subsets :-
+
+def wordSubsets(self, words1: List[str], words2: List[str]) -> List[str]:
+        required_freq = Counter()
+    
+        for word in words2:
+            word_freq = Counter(word)
+            for char, count in word_freq.items():
+                required_freq[char] = max(required_freq[char], count)
+
+        result = []
+    
+        for word in words1:
+            word_freq = Counter(word)
+            is_universal = True
+            
+            for char, count in required_freq.items():
+                if word_freq[char] < count:
+                    is_universal = False
+                    break
+            
+            if is_universal:
+                result.append(word)
+        
+        return result
