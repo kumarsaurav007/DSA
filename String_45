@@ -1,0 +1,14 @@
+# Keyboard Row :-
+
+def findWords(self, words: List[str]) -> List[str]:
+        res = []
+
+        first_row = "qwertyuiop"
+        second_row = "asdfghjkl"
+        third_row = "zxcvbnm"
+
+        for i in words:
+            word = i.lower()
+            if all(j in first_row for j in word) or all(j in second_row for j in word) or all(j in third_row for j in word):
+                res.append(i)
+        return res
