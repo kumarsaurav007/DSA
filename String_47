@@ -1,0 +1,10 @@
+# Furthest Point From Origin :-
+
+def furthestDistanceFromOrigin(self, moves: str) -> int:
+        left = moves.count("L")
+        right = moves.count("R")
+        if left >= right:
+            moves = moves.replace("_", "L")
+        else:
+            moves = moves.replace("_", "R")
+        return abs(moves.count("L") - moves.count("R"))
