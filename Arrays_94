@@ -1,0 +1,14 @@
+# Lucky Numbers in a Matrix :-
+
+def luckyNumbers(self, matrix: List[List[int]]) -> List[int]:
+        res = []
+        min_row = [min(i) for i in matrix]
+
+        max_col = [max(matrix[i][j] for i in range(len(matrix))) for j in range(len(matrix[0]))]
+        
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                if matrix[i][j] == min_row[i] and matrix[i][j] == max_col[j]:
+                    res.append(matrix[i][j])
+
+        return res 
