@@ -1,0 +1,16 @@
+# Count Number of Bad Pairs :-
+
+def countBadPairs(self, nums: List[int]) -> int:
+        count_map = {}
+        valid_pairs = 0
+        for i in range(len(nums)):
+            diff = i - nums[i]
+            if diff in count_map:
+                valid_pairs += count_map[diff]
+    
+            if diff not in count_map:
+                count_map[diff] = 0
+            count_map[diff] += 1
+
+        total_pairs = len(nums) * (len(nums) - 1) // 2
+        return total_pairs - valid_pairs
