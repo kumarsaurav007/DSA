@@ -1,0 +1,19 @@
+# Max Sum of a Pair With Equal Sum of Digits :-
+
+def maximumSum(self, nums: List[int]) -> int:
+        digit_sum_map = {}
+    
+        for num in nums:
+            digit_sum = sum(map(int, str(num)))
+            if digit_sum in digit_sum_map:
+                digit_sum_map[digit_sum].append(num)
+            else:
+                digit_sum_map[digit_sum] = [num]
+        
+        ans = -1
+        for numbers in digit_sum_map.values():
+            if len(numbers) > 1:
+                numbers.sort(reverse=True)
+                ans = max(ans, numbers[0] + numbers[1])
+        
+        return ans
