@@ -1,0 +1,22 @@
+# Find Eventual Safe States :-
+
+def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
+        n = len(graph)
+        state = [0] * n
+
+        def dfs(node):
+            if state[node] != 0:
+                return state[node]
+
+            state[node] = 1
+            for neighbor in graph[node]:
+                if dfs(neighbor) == 1:
+                    return 1
+            state[node] = 2
+            return 2
+
+        for i in range(n):
+            if state[i] == 0:
+                dfs(i)
+
+        return [i for i in range(n) if state[i] == 2]
