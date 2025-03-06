@@ -1,0 +1,15 @@
+# Longest Palindrome :-
+
+def longestPalindrome(self, s: str) -> int:
+        freq = Counter(s)
+        ans = 0
+        odd_found = False
+        for i in freq.values():
+            if i % 2 == 0:
+                ans += i
+            else:
+                ans += i -1
+                odd_found = True
+        if odd_found:
+            ans += 1
+        return ans
