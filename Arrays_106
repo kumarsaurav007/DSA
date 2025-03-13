@@ -1,0 +1,15 @@
+# Zero Array Transformation II :-
+
+def minZeroArray(self, nums: List[int], queries: List[List[int]]) -> int:
+        n = len(nums)
+
+        for k in range(len(queries)):
+            li, ri, vali = queries[k]
+            
+            for i in range(li, ri + 1):
+                nums[i] = max(0, nums[i] - vali)
+            
+            if all(num == 0 for num in nums):
+                return k + 1
+
+        return -1
