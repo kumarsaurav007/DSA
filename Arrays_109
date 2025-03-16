@@ -1,0 +1,21 @@
+# Minimum Time to Repair Cars :-
+
+def repairCars(self, ranks: List[int], cars: int) -> int:
+        left, right = 1, min(ranks) * cars * cars
+
+        def canRepairInTime(time):
+            count = 0
+            for rank in ranks:
+                count += int((time // rank) ** 0.5)
+                if count >= cars:
+                    return True
+            return False
+
+        while left < right:
+            mid = (left + right) // 2
+            if canRepairInTime(mid):
+                right = mid
+            else:
+                left = mid + 1
+
+        return left
