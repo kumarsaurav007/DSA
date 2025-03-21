@@ -1,0 +1,28 @@
+# Find All Possible Recipes from Given Supplies :-
+
+def findAllRecipes(self, recipes: List[str], ingredients: List[List[str]], supplies: List[str]) -> List[str]:
+        indegree = {}  
+        graph = defaultdict(list)  
+        available = set(supplies)  
+
+        for i in range(len(recipes)):
+            recipe = recipes[i]
+            indegree[recipe] = len(ingredients[i])  
+
+            for ing in ingredients[i]:
+                graph[ing].append(recipe)  
+
+        queue = deque(supplies)
+
+        result = []
+        while queue:
+            item = queue.popleft()
+            if item in recipes:
+                result.append(item)
+
+            for neighbor in graph[item]:
+                indegree[neighbor] -= 1
+                if indegree[neighbor] == 0:
+                    queue.append(neighbor)
+
+        return result
