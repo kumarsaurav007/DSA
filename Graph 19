@@ -1,0 +1,34 @@
+# Count the Number of Complete Components :-
+
+def countCompleteComponents(self, n: int, edges: List[List[int]]) -> int:
+        graph = defaultdict(set)
+
+        # Build adjacency list
+        for u, v in edges:
+            graph[u].add(v)
+            graph[v].add(u)
+
+        visited = set()
+        complete_count = 0
+
+        def dfs(node, component):
+            stack = [node]
+            while stack:
+                curr = stack.pop()
+                if curr not in visited:
+                    visited.add(curr)
+                    component.append(curr)
+                    stack.extend(graph[curr] - visited)
+
+        for i in range(n):
+            if i not in visited:
+                component = []
+                dfs(i, component)
+
+                size = len(component)
+                edge_count = sum(len(graph[node]) for node in component) // 2
+                
+                if edge_count == (size * (size - 1)) // 2:
+                    complete_count += 1
+
+        return complete_count
