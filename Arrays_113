@@ -1,0 +1,20 @@
+# Check if Grid can be Cut into Sections :-
+
+def checkValidCuts(self, n: int, rectangles: List[List[int]]) -> bool:
+        def check(intervals):
+            intervals.sort()
+            
+            sections = 0
+            max_end = intervals[0][1]
+            
+            for start, end in intervals:
+                if max_end <= start:
+                    sections += 1
+                max_end = max(max_end, end)
+                
+            return sections >= 2
+        
+        x_intervals = [[i[0], i[2]] for i in rectangles]
+        y_intervals = [[i[1], i[3]] for i in rectangles]
+        
+        return check(x_intervals) or check(y_intervals)
