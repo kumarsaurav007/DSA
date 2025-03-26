@@ -1,0 +1,12 @@
+# Minimum Operations to Make a Uni-Value Grid :-
+
+def minOperations(self, grid: List[List[int]], x: int) -> int:
+        arr = [num for row in grid for num in row]
+        remainder = arr[0] % x
+        if any(num % x != remainder for num in arr):
+            return -1
+
+        arr.sort()
+        median = arr[len(arr) // 2]
+
+        return sum(abs(num - median) // x for num in arr)
