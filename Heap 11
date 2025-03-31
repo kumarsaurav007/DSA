@@ -1,0 +1,12 @@
+# Put Marbles in Bags :-
+
+def putMarbles(self, weights, k):
+        if k == 1:
+            return 0 
+
+        pairwise_sums = [weights[i] + weights[i+1] for i in range(len(weights) - 1)]
+
+        largest = sum(nlargest(k-1, pairwise_sums))
+        smallest = sum(nsmallest(k-1, pairwise_sums))
+
+        return largest - smallest
