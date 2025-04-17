@@ -1,0 +1,10 @@
+# Count Equal and Divisible Pairs in an Array :-
+
+def countPairs(self, nums: List[int], k: int) -> int:
+        res = 0
+        n = len(nums)
+        for i in range(n-1):
+            for j in range(n):
+                if i < j and nums[i] == nums[j] and (i*j) % k == 0:
+                    res += 1
+        return res
