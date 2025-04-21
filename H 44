@@ -1,0 +1,12 @@
+# Rabbits in Forest :-
+
+def numRabbits(self, answers: List[int]) -> int:
+        count = Counter(answers)
+        total = 0
+
+        for x, cnt in count.items():
+            group_size = x + 1
+            groups = math.ceil(cnt / group_size)
+            total += groups * group_size
+
+        return total
