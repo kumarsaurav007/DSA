@@ -1,0 +1,16 @@
+# Count of Interesting Subarrays :-
+
+def countInterestingSubarrays(self, nums: List[int], modulo: int, k: int) -> int:
+        prefix = 0
+        count = defaultdict(int)
+        count[0] = 1
+        res = 0
+
+        for num in nums:
+            if num % modulo == k:
+                prefix += 1
+            prefix %= modulo
+            res += count[(prefix - k) % modulo]
+            count[prefix] += 1
+
+        return res
