@@ -1,0 +1,33 @@
+# Maximum Number of Tasks You Can Assign :-
+
+def maxTaskAssign(self, tasks: List[int], workers: List[int], pills: int, strength: int) -> int:
+        tasks.sort()
+        workers.sort()
+
+        def can_assign(k):
+            selected_tasks = tasks[:k]
+            selected_workers = SortedList(workers[-k:])
+            pills_left = pills
+
+            for i in range(k - 1, -1, -1):
+                task = selected_tasks[i]
+                if selected_workers[-1] >= task:
+                    selected_workers.pop()
+                else:
+                    idx = selected_workers.bisect_left(task - strength)
+                    if idx == len(selected_workers) or pills_left == 0:
+                        return False
+                    selected_workers.pop(idx)
+                    pills_left -= 1
+            return True
+
+        left, right = 0, min(len(tasks), len(workers))
+        answer = 0
+        while left <= right:
+            mid = (left + right) // 2
+            if can_assign(mid):
+                answer = mid
+                left = mid + 1
+            else:
+                right = mid - 1
+        return answer
