@@ -1,0 +1,19 @@
+# Total Characters in String After Transformations I :-
+
+def lengthAfterTransformations(self, s: str, t: int) -> int:
+        MOD = 10**9 + 7
+        arr = [0] * 26
+        
+        for ch in s:
+            arr[ord(ch) - ord('a')] += 1
+        
+        for _ in range(t):
+            dp = [0] * 26
+            for i in range(26):
+                if i == 25:
+                    dp[0] = (dp[0] + arr[i]) % MOD
+                    dp[1] = (dp[1] + arr[i]) % MOD
+                else:
+                    dp[i + 1] = (dp[i + 1] + arr[i]) % MOD
+            arr = dp
+        return sum(arr) % MOD
