@@ -1,0 +1,39 @@
+# Painting a Grid With Three Different Colors :-
+
+MOD = 10**9 + 7
+class Solution:
+    def colorTheGrid(self, m: int, n: int) -> int:
+        colors = [0, 1, 2]
+        
+        @lru_cache(None)
+        def generate_valid_states(pos: int, prev_color: int, state: Tuple[int]) -> List[Tuple[int]]:
+            if pos == m:
+                return [state]
+            res = []
+            for c in colors:
+                if c != prev_color:
+                    res += generate_valid_states(pos + 1, c, state + (c,))
+            return res
+
+        valid_states = generate_valid_states(0, -1, ())
+        
+        # Precompute valid transitions
+        transitions = {}
+        for s1 in valid_states:
+            transitions[s1] = []
+            for s2 in valid_states:
+                if all(a != b for a, b in zip(s1, s2)):
+                    transitions[s1].append(s2)
+
+        # DP initialization
+        dp = {state: 1 for state in valid_states}
+        
+        # Iterate over columns
+        for _ in range(1, n):
+            new_dp = {}
+            for prev_state in dp:
+                for next_state in transitions[prev_state]:
+                    new_dp[next_state] = (new_dp.get(next_state, 0) + dp[prev_state]) % MOD
+            dp = new_dp
+
+        return sum(dp.values()) % MOD
