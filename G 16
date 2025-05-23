@@ -1,0 +1,26 @@
+# Find the Maximum Sum of Node Values :-
+
+def maximumValueSum(self, nums: List[int], k: int, edges: List[List[int]]) -> int:
+        total = sum(nums)
+        gains = [(num ^ k) - num for num in nums]
+        gains.sort(reverse=True)
+        
+        sum_gain = 0
+        count = 0
+        
+        for g in gains:
+            if g > 0:
+                sum_gain += g
+                count += 1
+        
+        if count & 1:
+            res = float('inf')
+            for g in gains:
+                if g > 0:
+                    res = min(res, g)
+                else:
+                    res = min(res, -g)
+                    break
+            sum_gain -= res
+        
+        return total + sum_gain
