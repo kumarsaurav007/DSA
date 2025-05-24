@@ -1,0 +1,16 @@
+# Rank Transform of an Array :-
+
+def arrayRankTransform(self, arr: List[int]) -> List[int]:
+        new_arr = sorted(set(arr))
+
+        rank = {}
+        curr_rank = 1
+        for num in new_arr:
+            rank[num] = curr_rank
+            curr_rank += 1
+        
+        res = []
+        for num in arr:
+            res.append(rank[num])
+        
+        return res
