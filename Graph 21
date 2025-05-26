@@ -1,0 +1,44 @@
+# Largest Color Value in a Directed Graph :-
+
+def largestPathValue(self, colors: str, edges: List[List[int]]) -> int:
+        n = len(colors)
+        graph = defaultdict(list)
+        indegree = [0] * n
+
+        # Build graph and indegree
+        for u, v in edges:
+            graph[u].append(v)
+            indegree[v] += 1
+
+        # dp[i][c] = max number of times color c appears on a path ending at node i
+        dp = [[0] * 26 for _ in range(n)]
+        queue = deque()
+        
+        # Start with nodes having indegree 0
+        for i in range(n):
+            if indegree[i] == 0:
+                queue.append(i)
+            # Initialize the color of the node itself
+            dp[i][ord(colors[i]) - ord('a')] = 1
+
+        visited = 0
+        max_color_count = 0
+
+        while queue:
+            node = queue.popleft()
+            visited += 1
+
+            for neighbor in graph[node]:
+                for c in range(26):
+                    dp[neighbor][c] = max(
+                        dp[neighbor][c],
+                        dp[node][c] + (1 if c == ord(colors[neighbor]) - ord('a') else 0)
+                    )
+                indegree[neighbor] -= 1
+                if indegree[neighbor] == 0:
+                    queue.append(neighbor)
+
+            max_color_count = max(max_color_count, max(dp[node]))
+
+        # If not all nodes visited, there is a cycle
+        return max_color_count if visited == n else -1
