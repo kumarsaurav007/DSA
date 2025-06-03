@@ -1,0 +1,36 @@
+# Maximum Candies You Can Get from Boxes :-
+
+def maxCandies(self, status: List[int], candies: List[int], keys: List[List[int]], containedBoxes: List[List[int]], initialBoxes: List[int]) -> int:
+        n = len(status)
+        visited = [False] * n  # To prevent reprocessing
+        has_box = [False] * n  # Whether we have the box
+        has_key = [False] * n  # Whether we have the key
+
+        queue = deque()
+        for box in initialBoxes:
+            has_box[box] = True
+            if status[box] == 1:
+                queue.append(box)
+
+        total_candies = 0
+
+        while queue:
+            box = queue.popleft()
+            if visited[box]:
+                continue
+            visited[box] = True
+            total_candies += candies[box]
+
+            # Process keys found in this box
+            for key in keys[box]:
+                has_key[key] = True
+                if has_box[key] and not visited[key]:
+                    queue.append(key)
+
+            # Process boxes found inside this box
+            for contained in containedBoxes[box]:
+                has_box[contained] = True
+                if status[contained] == 1 or has_key[contained]:
+                    queue.append(contained)
+
+        return total_candies
