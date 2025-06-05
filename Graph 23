@@ -1,0 +1,35 @@
+# Lexicographically Smallest Equivalent String :-
+
+def smallestEquivalentString(self, s1: str, s2: str, baseStr: str) -> str:
+        graph = defaultdict(list)
+
+        # Step 1: Build the graph
+        for a, b in zip(s1, s2):
+            graph[a].append(b)
+            graph[b].append(a)
+
+        visited = {}
+        char_map = {}
+
+        # Step 2: DFS to find connected components
+        def dfs(node, component):
+            visited[node] = True
+            component.append(node)
+            for neighbor in graph[node]:
+                if not visited.get(neighbor, False):
+                    dfs(neighbor, component)
+
+        for ch in map(chr, range(ord('a'), ord('z') + 1)):
+            if not visited.get(ch, False) and ch in graph:
+                component = []
+                dfs(ch, component)
+                smallest = min(component)
+                for c in component:
+                    char_map[c] = smallest
+
+        # Step 3: Build result
+        result = []
+        for c in baseStr:
+            result.append(char_map.get(c, c))
+
+        return ''.join(result)
