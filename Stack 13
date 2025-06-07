@@ -1,0 +1,18 @@
+# Lexicographically Minimum String After Removing Stars :-
+
+def clearStars(self, s: str) -> str:
+        minheap = []
+        indexes = defaultdict(list)
+        stack = []
+    
+        for ch in s:
+            if ch == '*':
+                if minheap:
+                    c = heapq.heappop(minheap)
+                    stack[indexes[c].pop()] = ""
+            else:
+                heapq.heappush(minheap, ch)
+                indexes[ch].append(len(stack))
+                stack.append(ch)
+                        
+        return ''.join(stack)
