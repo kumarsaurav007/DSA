@@ -1,0 +1,24 @@
+# K-th Smallest in Lexicographical Order :-
+
+def findKthNumber(self, n: int, k: int) -> int:
+        def getCount(prefix, n):
+            count = 0
+            current = prefix
+            next_prefix = prefix + 1
+            while current <= n:
+                count += min(n + 1, next_prefix) - current
+                current *= 10
+                next_prefix *= 10
+            return count
+
+        curr = 1
+        k -= 1  # Since we start with '1' as the first lexicographical number
+        while k > 0:
+            count = getCount(curr, n)
+            if k >= count:
+                k -= count
+                curr += 1
+            else:
+                curr *= 10
+                k -= 1
+        return curr
