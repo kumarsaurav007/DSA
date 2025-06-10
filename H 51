@@ -1,0 +1,9 @@
+# Maximum Difference Between Even and Odd Frequency I :-
+
+def maxDifference(self, s: str) -> int:
+        freq = Counter(s)
+
+        odd_freq = [x for x in freq.values() if x % 2 == 1]
+        even_freq = [x for x in freq.values() if x % 2 == 0]
+
+        return max(odd_freq) - min(even_freq)
