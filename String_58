@@ -1,0 +1,40 @@
+# Maximum Difference Between Even and Odd Frequency II :-
+
+def maxDifference(self, s: str, k: int) -> int:
+        ans = -inf  # Start with the smallest possible result
+
+        # Try every pair of different characters from '0' to '4'
+        for a in "01234":
+            for b in "01234":
+                if a == b:
+                    continue
+
+                # Prefix counts of character a and b
+                pa = [0]
+                pb = [0]
+
+                seen = defaultdict(lambda: inf)  # Stores minimum difference for (parity of a, parity of b)
+                ii = 0  # Left pointer of the window
+
+                for i, ch in enumerate(s):
+                    # Update prefix counts
+                    pa.append(pa[-1] + (ch == a))
+                    pb.append(pb[-1] + (ch == b))
+
+                    # Move the left pointer while maintaining a valid window (length ≥ k)
+                    # and store differences at valid prefix points
+                    while ii <= i - k + 1 and pa[ii] < pa[-1] and pb[ii] < pb[-1]:
+                        # Save the smallest difference for (parity of pa, parity of pb)
+                        key = (pa[ii] % 2, pb[ii] % 2)
+                        diff = pa[ii] - pb[ii]
+                        seen[key] = min(seen[key], diff)
+                        ii += 1
+
+                    # We want pa in current window to be odd and pb to be even
+                    key = (1 - pa[-1] % 2, pb[-1] % 2)
+                    diff = pa[-1] - pb[-1]
+
+                    # If we have a prefix with matching parity, update answer
+                    ans = max(ans, diff - seen[key])
+
+        return ans
