@@ -1,0 +1,25 @@
+# Max Difference You Can Get From Changing an Integer :-
+
+def maxDiff(self, num: int) -> int:
+        s = str(num)
+        
+        # Find max number (replace a digit with 9)
+        for ch in s:
+            if ch != '9':
+                a = int(s.replace(ch, '9'))
+                break
+        else:
+            a = num  # Already all 9s
+
+        # Find min number (replace a digit with 1 or 0)
+        for i, ch in enumerate(s):
+            if i == 0 and ch != '1':
+                b = int(s.replace(ch, '1'))
+                break
+            elif i > 0 and ch != '0' and ch != s[0]:  # avoid changing leading digit
+                b = int(s.replace(ch, '0'))
+                break
+        else:
+            b = num  # Already minimum possible
+
+        return a - b
