@@ -1,0 +1,19 @@
+# Minimum Deletions to Make String K-Special :-
+
+def minimumDeletions(self, word: str, k: int) -> int:
+        freq = Counter(word)
+        freqs = list(freq.values())
+        max_freq = max(freqs)
+        min_deletions = float('inf')
+
+        for target in range(1, max_freq + 1):
+            deletions = 0
+            for f in freqs:
+                if f < target:
+                    deletions += f  # delete all
+                elif f > target + k:
+                    deletions += f - (target + k)
+                # else: keep as is
+            min_deletions = min(min_deletions, deletions)
+
+        return min_deletions
