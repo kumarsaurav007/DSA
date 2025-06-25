@@ -1,0 +1,32 @@
+# Kth Smallest Product of Two Sorted Arrays :-
+
+def kthSmallestProduct(self, nums1: List[int], nums2: List[int], k: int) -> int:
+        nums1.sort()
+        nums2.sort()
+        
+        def countLE(val):
+            count = 0
+            for a in nums1:
+                if a == 0:
+                    if val >= 0:
+                        count += len(nums2)
+                elif a > 0:
+                    # Count of nums2[j] such that a * nums2[j] <= val
+                    count += bisect.bisect_right(nums2, val // a)
+                else:
+                    # a < 0, want a * nums2[j] <= val => nums2[j] >= val / a
+                    target = val // a
+                    if val % a != 0:
+                        target += 1
+                    count += len(nums2) - bisect.bisect_left(nums2, target)
+            return count
+
+        # Binary search for the kth smallest product
+        left, right = -10**10, 10**10
+        while left < right:
+            mid = (left + right) // 2
+            if countLE(mid) < k:
+                left = mid + 1
+            else:
+                right = mid
+        return left
