@@ -1,0 +1,12 @@
+# Find Subsequence of Length K With the Largest Sum :-
+
+def maxSubsequence(self, nums: List[int], k: int) -> List[int]:
+        # Get the indices of the k largest elements
+        # Store (value, index) to help sort back in original order
+        top_k = heapq.nlargest(k, enumerate(nums), key=lambda x: (x[1], x[0]))
+
+        # Sort those k elements back in their original order
+        top_k.sort(key=lambda x: x[0])
+
+        # Return only the values
+        return [x[1] for x in top_k]
