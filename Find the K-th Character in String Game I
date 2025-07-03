@@ -1,0 +1,10 @@
+def kthCharacter(self, k: int) -> str:
+        word = ['a']
+        while len(word) < k:
+            temp = []
+            for ch in word:
+                # next character with wraparound
+                next_char = chr((ord(ch) - ord('a') + 1) % 26 + ord('a'))
+                temp.append(next_char)
+            word += temp
+        return word[k - 1]
