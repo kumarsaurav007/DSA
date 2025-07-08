@@ -1,0 +1,24 @@
+# Maximum Number of Events That Can Be Attended II :-
+
+def maxValue(self, events: List[List[int]], k: int) -> int:
+        # Sort events by start time to use binary search
+        events.sort()
+        n = len(events)
+        # Extract start times for binary search
+        start_times = [e[0] for e in events]
+        
+        @lru_cache(None)
+        def dp(index: int, count: int) -> int:
+            if index == n or count == k:
+                return 0
+            
+            # Binary search to find next non-overlapping event
+            next_index = bisect.bisect_right(start_times, events[index][1])
+            
+            # Two options: skip or take current event
+            take = events[index][2] + dp(next_index, count + 1)
+            skip = dp(index + 1, count)
+            
+            return max(take, skip)
+        
+        return dp(0, 0)
