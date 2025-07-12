@@ -1,0 +1,61 @@
+# The Earliest and Latest Rounds Where Players Compete :-
+
+def earliestAndLatest(self, n: int, firstPlayer: int, secondPlayer: int) -> List[int]:
+        memo = {}
+
+        def dfs(players, round_num):
+            key = tuple(players)
+            if key in memo:
+                return memo[key]
+
+            # Find positions
+            i, j = players.index(firstPlayer), players.index(secondPlayer)
+            if i + j == len(players) - 1:
+                # They are matched this round
+                return [round_num, round_num]
+
+            earliest = float('inf')
+            latest = 0
+
+            # Try all combinations of who wins each match (except for firstPlayer and secondPlayer)
+            def generate_winners(start, end, path):
+                if start >= end:
+                    if start == end:
+                        path.append(players[start])
+                    yield path[:]
+                    if start == end:
+                        path.pop()
+                    return
+
+                a, b = players[start], players[end]
+                if {a, b} == {firstPlayer, secondPlayer}:
+                    return  # cannot skip match
+                elif firstPlayer in (a, b):
+                    path.append(firstPlayer)
+                    yield from generate_winners(start + 1, end - 1, path)
+                    path.pop()
+                elif secondPlayer in (a, b):
+                    path.append(secondPlayer)
+                    yield from generate_winners(start + 1, end - 1, path)
+                    path.pop()
+                else:
+                    # Either can win
+                    path.append(a)
+                    yield from generate_winners(start + 1, end - 1, path)
+                    path.pop()
+
+                    path.append(b)
+                    yield from generate_winners(start + 1, end - 1, path)
+                    path.pop()
+
+            for new_players in generate_winners(0, len(players) - 1, []):
+                new_players.sort()
+                er, lr = dfs(new_players, round_num + 1)
+                earliest = min(earliest, er)
+                latest = max(latest, lr)
+
+            memo[key] = [earliest, latest]
+            return memo[key]
+
+        players = list(range(1, n + 1))
+        return dfs(players, 1)
