@@ -1,0 +1,7 @@
+# Convert Binary Number in a Linked List to Integer :-
+
+result = 0
+        while head:
+            result = (result << 1) | head.val
+            head = head.next
+        return result
