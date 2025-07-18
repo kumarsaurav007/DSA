@@ -1,0 +1,35 @@
+# Minimum Difference in Sums After Removal of Elements :-
+
+def minimumDifference(self, nums: List[int]) -> int:
+        n = len(nums) // 3
+
+        # Step 1: Prefix max heap (we keep the smallest possible sum of n elements)
+        left_heap = []
+        left_sum = sum(nums[:n])
+        prefix = [left_sum]
+        for i in range(n):
+            heapq.heappush(left_heap, -nums[i])
+        for i in range(n, 2*n):
+            heapq.heappush(left_heap, -nums[i])
+            left_sum += nums[i] + heapq.heappop(left_heap)
+            prefix.append(left_sum)
+
+        # Step 2: Suffix min heap (we keep the largest possible sum of n elements)
+        right_heap = []
+        right_sum = sum(nums[-n:])
+        suffix = [0] * (n + 1)
+        suffix[n] = right_sum
+        for i in range(n):
+            heapq.heappush(right_heap, nums[3*n - 1 - i])
+        idx = n - 1
+        for i in range(2*n - 1, n - 1, -1):
+            heapq.heappush(right_heap, nums[i])
+            right_sum += nums[i] - heapq.heappop(right_heap)
+            suffix[idx] = right_sum
+            idx -= 1
+
+        # Step 3: Try all split points and minimize prefix[i] - suffix[i]
+        min_diff = float('inf')
+        for i in range(n + 1):
+            min_diff = min(min_diff, prefix[i] - suffix[i])
+        return min_diff
