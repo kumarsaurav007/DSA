@@ -1,0 +1,58 @@
+# Minimum Score After Removals on a Tree :-
+
+def minimumScore(self, nums: List[int], edges: List[List[int]]) -> int:
+        n = len(nums)
+        graph = defaultdict(list)
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+
+        parent = [-1] * n
+        subtree_xor = [0] * n
+        time_in = [0] * n
+        time_out = [0] * n
+        timer = [0]
+
+        def dfs(u, p):
+            parent[u] = p
+            subtree_xor[u] = nums[u]
+            timer[0] += 1
+            time_in[u] = timer[0]
+            for v in graph[u]:
+                if v != p:
+                    dfs(v, u)
+                    subtree_xor[u] ^= subtree_xor[v]
+            timer[0] += 1
+            time_out[u] = timer[0]
+
+        dfs(0, -1)
+
+        # Check if node a is ancestor of node b
+        def is_ancestor(a, b):
+            return time_in[a] <= time_in[b] and time_out[b] <= time_out[a]
+
+        total_xor = subtree_xor[0]
+        res = float('inf')
+
+        for i in range(1, n):
+            for j in range(1, n):
+                if i == j:
+                    continue
+
+                if is_ancestor(i, j):
+                    x = subtree_xor[j]
+                    y = subtree_xor[i] ^ subtree_xor[j]
+                    z = total_xor ^ subtree_xor[i]
+                elif is_ancestor(j, i):
+                    x = subtree_xor[i]
+                    y = subtree_xor[j] ^ subtree_xor[i]
+                    z = total_xor ^ subtree_xor[j]
+                else:
+                    x = subtree_xor[i]
+                    y = subtree_xor[j]
+                    z = total_xor ^ subtree_xor[i] ^ subtree_xor[j]
+
+                score = max(x, y, z) - min(x, y, z)
+                res = min(res, score)
+
+        return res
