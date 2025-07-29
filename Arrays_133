@@ -1,0 +1,24 @@
+# Smallest Subarrays With Maximum Bitwise OR :-
+
+def smallestSubarrays(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        answer = [0] * n
+        or_map = dict()  # current OR -> minimum index where it occurs
+
+        for i in range(n - 1, -1, -1):
+            temp = dict()
+            temp[nums[i]] = i  # start new OR from nums[i]
+
+            for val, idx in or_map.items():
+                new_or = val | nums[i]
+                if new_or in temp:
+                    temp[new_or] = min(temp[new_or], idx)
+                else:
+                    temp[new_or] = idx
+
+            or_map = temp
+
+            max_or = max(or_map.keys())
+            answer[i] = or_map[max_or] - i + 1
+
+        return answer
