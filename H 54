@@ -1,0 +1,32 @@
+# Rearranging Fruits :-
+
+class Solution:
+    def minCost(self, basket1: List[int], basket2: List[int]) -> int:
+        count = Counter()
+        for x in basket1:
+            count[x] += 1
+        for x in basket2:
+            count[x] -= 1
+        
+        # Check feasibility
+        for v in count.values():
+            if v % 2 != 0:
+                return -1
+        
+        # Get global minimum element
+        all_items = basket1 + basket2
+        min_item = min(all_items)
+        
+        # Get the elements that need to be swapped
+        swap_items = []
+        for val in count:
+            freq = abs(count[val]) // 2
+            swap_items.extend([val] * freq)
+        
+        # Only half the swaps are needed (each pair covers two elements)
+        swap_items.sort()
+        res = 0
+        for i in range(len(swap_items) // 2):
+            res += min(swap_items[i], 2 * min_item)
+        
+        return res
