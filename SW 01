@@ -1,0 +1,31 @@
+# Maximum Fruits Harvested After at Most K Steps :-
+
+def maxTotalFruits(self, fruits: List[List[int]], startPos: int, k: int) -> int:
+        max_fruits = 0
+        n = len(fruits)
+        left = 0
+        curr_fruits = 0
+
+        # sliding window: right expands, left contracts if out of range
+        for right in range(n):
+            curr_fruits += fruits[right][1]
+
+            while left <= right:
+                l_pos = fruits[left][0]
+                r_pos = fruits[right][0]
+
+                # min steps needed to cover from startPos to [l_pos, r_pos]
+                min_steps = min(
+                    abs(startPos - l_pos) + (r_pos - l_pos),
+                    abs(startPos - r_pos) + (r_pos - l_pos)
+                )
+
+                if min_steps > k:
+                    curr_fruits -= fruits[left][1]
+                    left += 1
+                else:
+                    break
+
+            max_fruits = max(max_fruits, curr_fruits)
+
+        return max_fruits
