@@ -1,0 +1,23 @@
+# Ways to Express an Integer as Sum of Powers :-
+
+MOD = 10**9 + 7
+class Solution:
+    def numberOfWays(self, n: int, x: int) -> int:
+        powers = []
+        i = 1
+        while True:
+            val = i ** x
+            if val > n:
+                break
+            powers.append(val)
+            i += 1
+
+        dp = [0] * (n + 1)
+        dp[0] = 1
+
+        # each power can be used at most once -> iterate sums backwards
+        for p in powers:
+            for s in range(n, p - 1, -1):
+                dp[s] = (dp[s] + dp[s - p]) % MOD
+
+        return dp[n]
