@@ -1,0 +1,26 @@
+# Count Submatrices With All Ones :-
+
+def numSubmat(self, mat: List[List[int]]) -> int:
+        m, n = len(mat), len(mat[0])
+        heights = [0] * n
+        total = 0
+
+        for i in range(m):
+            # build histogram heights
+            for j in range(n):
+                if mat[i][j] == 0:
+                    heights[j] = 0
+                else:
+                    heights[j] += 1
+
+            # count rectangles ending at each column j
+            for j in range(n):
+                if heights[j] > 0:
+                    min_h = heights[j]
+                    k = j
+                    while k >= 0 and heights[k] > 0:
+                        min_h = min(min_h, heights[k])
+                        total += min_h
+                        k -= 1
+
+        return total
