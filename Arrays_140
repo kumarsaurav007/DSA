@@ -1,0 +1,75 @@
+# Find the Minimum Area to Cover All Ones II :-
+
+def minimumSum(self, grid: List[List[int]]) -> int:
+        m, n = len(grid), len(grid[0])
+        
+        points = [(i, j) for i in range(m) for j in range(n) if grid[i][j] == 1]
+
+        def area(points):
+            if not points: 
+                return float('inf')  # invalid empty group
+            min_r = min(p[0] for p in points)
+            max_r = max(p[0] for p in points)
+            min_c = min(p[1] for p in points)
+            max_c = max(p[1] for p in points)
+            return (max_r - min_r + 1) * (max_c - min_c + 1)
+
+        best = float('inf')
+
+        # --- vertical 3-split ---
+        for c1 in range(n):
+            for c2 in range(c1+1, n):
+                g1 = [p for p in points if p[1] <= c1]
+                g2 = [p for p in points if c1 < p[1] <= c2]
+                g3 = [p for p in points if p[1] > c2]
+                if g1 and g2 and g3:
+                    best = min(best, area(g1)+area(g2)+area(g3))
+
+        # --- horizontal 3-split ---
+        for r1 in range(m):
+            for r2 in range(r1+1, m):
+                g1 = [p for p in points if p[0] <= r1]
+                g2 = [p for p in points if r1 < p[0] <= r2]
+                g3 = [p for p in points if p[0] > r2]
+                if g1 and g2 and g3:
+                    best = min(best, area(g1)+area(g2)+area(g3))
+
+        # --- 2 vertical + split one horizontally ---
+        for c in range(n):
+            left = [p for p in points if p[1] <= c]
+            right = [p for p in points if p[1] > c]
+            if not left or not right: 
+                continue
+            # split left horizontally
+            for r in range(m):
+                g1 = [p for p in left if p[0] <= r]
+                g2 = [p for p in left if p[0] > r]
+                if g1 and g2:
+                    best = min(best, area(g1)+area(g2)+area(right))
+            # split right horizontally
+            for r in range(m):
+                g1 = [p for p in right if p[0] <= r]
+                g2 = [p for p in right if p[0] > r]
+                if g1 and g2:
+                    best = min(best, area(left)+area(g1)+area(g2))
+
+        # --- 2 horizontal + split one vertically ---
+        for r in range(m):
+            top = [p for p in points if p[0] <= r]
+            bottom = [p for p in points if p[0] > r]
+            if not top or not bottom:
+                continue
+            # split top vertically
+            for c in range(n):
+                g1 = [p for p in top if p[1] <= c]
+                g2 = [p for p in top if p[1] > c]
+                if g1 and g2:
+                    best = min(best, area(g1)+area(g2)+area(bottom))
+            # split bottom vertically
+            for c in range(n):
+                g1 = [p for p in bottom if p[1] <= c]
+                g2 = [p for p in bottom if p[1] > c]
+                if g1 and g2:
+                    best = min(best, area(top)+area(g1)+area(g2))
+
+        return best
