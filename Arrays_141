@@ -1,0 +1,15 @@
+# Maximum Area of Longest Diagonal Rectangle :-
+
+def areaOfMaxDiagonal(self, dimensions: List[List[int]]) -> int:
+        max_diagonal = 0
+        res_area = 0
+
+        for l, w in dimensions:
+            diagonal = sqrt(l*l + w*w)
+            area = l * w
+        
+            if (diagonal > max_diagonal) or (diagonal == max_diagonal and area > res_area):
+                max_diagonal = diagonal
+                res_area = area
+
+        return res_area 
