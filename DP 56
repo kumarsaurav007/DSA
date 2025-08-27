@@ -1,0 +1,44 @@
+# Length of Longest V-Shaped Diagonal Segment :-
+
+from typing import List
+
+class Solution:
+    dirs = [[1, 1], [-1, 1], [-1, -1], [1, -1]]  # diagonal directions
+
+    def zerotwo(self, i, j, grid, di, turn, val, dp):
+        ans = 0
+        if 0 <= i < len(grid) and 0 <= j < len(grid[0]) and grid[i][j] == val:
+            if dp[i][j][di][turn] != -1:
+                return dp[i][j][di][turn]
+
+            ans += 1
+            nextval = abs(2 - val)
+
+            if turn:
+                ans += max(
+                    self.zerotwo(i + self.dirs[di][0], j + self.dirs[di][1], grid, di, 1, nextval, dp),
+                    self.zerotwo(i + self.dirs[di - 1][0], j + self.dirs[di - 1][1], grid, di - 1, 0, nextval, dp)
+                )
+            else:
+                ans += self.zerotwo(i + self.dirs[di][0], j + self.dirs[di][1], grid, di, turn, nextval, dp)
+
+            dp[i][j][di][turn] = ans
+        return ans
+
+    def diagfind(self, grid, i, j, dp):
+        ans = 0
+        for di in range(4):
+            ans = max(ans, self.zerotwo(i + self.dirs[di][0], j + self.dirs[di][1], grid, di, 1, 2, dp))
+        return ans
+
+    def lenOfVDiagonal(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        m = len(grid[0])
+        dp = [[[[-1, -1] for _ in range(4)] for _ in range(m)] for _ in range(n)]
+
+        ans = 0
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j] == 1:
+                    ans = max(ans, 1 + self.diagfind(grid, i, j, dp))
+        return ans
