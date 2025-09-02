@@ -1,0 +1,32 @@
+# Find the Number of Ways to Place People I :-
+
+def numberOfPairs(self, points: List[List[int]]) -> int:
+        n = len(points)
+        ans = 0
+
+        for i in range(n):
+            Ax, Ay = points[i]
+            for j in range(n):
+                if i == j:
+                    continue
+                Bx, By = points[j]
+
+                # A is on the upper-left side of B (allow line cases)
+                if Ax <= Bx and Ay >= By:
+                    x1, y1 = Ax, Ay          # upper-left
+                    x2, y2 = Bx, By          # lower-right
+                    valid = True
+
+                    # Rectangle (or line) must be empty INCLUDING BORDER
+                    for k in range(n):
+                        if k == i or k == j:
+                            continue
+                        x, y = points[k]
+                        if x1 <= x <= x2 and y2 <= y <= y1:
+                            valid = False
+                            break
+
+                    if valid:
+                        ans += 1
+
+        return ans
