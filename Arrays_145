@@ -1,0 +1,42 @@
+# Find the Number of Ways to Place People II :-
+
+def numberOfPairs(self, points: List[List[int]]) -> int:
+        n = len(points)
+
+        # Coordinate compression
+        xs = sorted(set(x for x, y in points))
+        ys = sorted(set(y for x, y in points))
+        x_map = {v: i for i, v in enumerate(xs)}
+        y_map = {v: i for i, v in enumerate(ys)}
+
+        grid = [[0] * (len(ys) + 1) for _ in range(len(xs) + 1)]
+
+        # Place points in grid
+        for x, y in points:
+            grid[x_map[x] + 1][y_map[y] + 1] = 1
+
+        # Build 2D prefix sum
+        for i in range(1, len(xs) + 1):
+            for j in range(1, len(ys) + 1):
+                grid[i][j] += grid[i-1][j] + grid[i][j-1] - grid[i-1][j-1]
+
+        def rect_sum(x1, y1, x2, y2):
+            # inclusive rectangle [x1, x2] × [y1, y2] in compressed coords
+            return grid[x2][y2] - grid[x1-1][y2] - grid[x2][y1-1] + grid[x1-1][y1-1]
+
+        ans = 0
+        for i in range(n):
+            Ax, Ay = points[i]
+            for j in range(n):
+                if i == j:
+                    continue
+                Bx, By = points[j]
+
+                if Ax <= Bx and Ay >= By:
+                    xi1, yi1 = x_map[Ax] + 1, y_map[By] + 1
+                    xi2, yi2 = x_map[Bx] + 1, y_map[Ay] + 1
+                    cnt = rect_sum(xi1, yi1, xi2, yi2)
+                    if cnt == 2:  # only Alice and Bob
+                        ans += 1
+
+        return ans
