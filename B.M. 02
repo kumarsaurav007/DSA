@@ -1,0 +1,24 @@
+# Minimum Operations to Make Array Elements Zero :-
+
+def minOperations(self, queries: List[List[int]]) -> int:
+        powers = [1]
+        while powers[-1] <= 10**9:
+            powers.append(powers[-1] * 4)
+        
+        def steps_in_range(l, r):
+            total = 0
+            for k in range(len(powers) - 1):
+                lo, hi = powers[k], powers[k+1] - 1
+                if r < lo or l > hi:
+                    continue
+                left = max(l, lo)
+                right = min(r, hi)
+                count = right - left + 1
+                total += count * (k + 1)
+            return total
+
+        ans = 0
+        for l, r in queries:
+            total_steps = steps_in_range(l, r)
+            ans += (total_steps + 1) // 2
+        return ans
