@@ -1,0 +1,6 @@
+# Vowels Game in a String :-
+
+def doesAliceWin(self, s: str) -> bool:
+        vowels = [vowel for vowel in s if vowel in "aeiouAEIOU"]
+
+        return False if len(vowels) == 0 else True
