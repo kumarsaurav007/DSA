@@ -1,0 +1,13 @@
+# Find Most Frequent Vowel and Consonant :-
+
+def maxFreqSum(self, s: str) -> int:
+        vowel_list = [vowel for vowel in s if vowel in "aeiou"]
+        consonant_list = [cons for cons in s if cons in "bcdfghjklmnpqrstvwxyz"]
+
+        vowel_dict = Counter(vowel_list)
+        consonant_dict = Counter(consonant_list)
+
+        max_vowel_freq = max(vowel_dict.values(), default=0)
+        max_consonant_freq = max(consonant_dict.values(), default=0)
+
+        return max_vowel_freq + max_consonant_freq
