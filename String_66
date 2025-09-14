@@ -1,0 +1,36 @@
+# Vowel Spellchecker :-
+
+def spellchecker(self, wordlist: List[str], queries: List[str]) -> List[str]:
+        word_set = set(wordlist)   # For exact matches
+        lower_map = {}             # For case-insensitive matches
+        vowel_map = {}             # For vowel-error matches
+        
+        def mask_vowels(word: str) -> str:
+            vowels = set("aeiou")
+            return "".join("*" if c in vowels else c for c in word)
+        
+        # Build lookup maps
+        for word in wordlist:
+            lower = word.lower()
+            masked = mask_vowels(lower)
+            
+            # Store only the first occurrence
+            if lower not in lower_map:
+                lower_map[lower] = word
+            if masked not in vowel_map:
+                vowel_map[masked] = word
+        
+        ans = []
+        for q in queries:
+            if q in word_set:  # 1. Exact match
+                ans.append(q)
+            else:
+                lower_q = q.lower()
+                masked_q = mask_vowels(lower_q)
+                if lower_q in lower_map:  # 2. Case-insensitive match
+                    ans.append(lower_map[lower_q])
+                elif masked_q in vowel_map:  # 3. Vowel-error match
+                    ans.append(vowel_map[masked_q])
+                else:
+                    ans.append("")  # 4. No match
+        return ans
