@@ -1,0 +1,10 @@
+def maxBottlesDrunk(self, numBottles: int, numExchange: int) -> int:
+        ans = numBottles
+
+        while numBottles >= numExchange:
+            ans += 1
+            emptyBottle = 1
+            numBottles = numBottles - numExchange + emptyBottle
+            numExchange += 1
+
+        return ans
