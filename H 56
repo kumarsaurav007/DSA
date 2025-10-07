@@ -1,0 +1,25 @@
+# Avoid Flood in The City :-
+
+def avoidFlood(self, rains: List[int]) -> List[int]:
+        full = {}         # To track which lake is currently full
+        dry_days = []     # To store indices where rains[i] == 0
+        ans = [-1] * len(rains)
+
+        for i, lake in enumerate(rains):
+            if lake == 0:
+                dry_days.append(i)  # We can use this day to dry a lake later
+                ans[i] = 1          # Temporary (will adjust later)
+            else:
+                if lake in full:    # If this lake is already full — need to dry it before
+                    # Find a dry day after the previous fill day
+                    can_dry = -1
+                    for j in range(len(dry_days)):
+                        if dry_days[j] > full[lake]:
+                            can_dry = j
+                            break
+                    if can_dry == -1:
+                        return []  # No dry day available before flooding → impossible
+                    ans[dry_days[can_dry]] = lake  # Use this dry day for this lake
+                    dry_days.pop(can_dry)
+                full[lake] = i  # Mark lake as filled
+        return ans
