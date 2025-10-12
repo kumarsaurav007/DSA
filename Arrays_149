@@ -1,0 +1,28 @@
+# Find Sum of Array Product of Magical Sequences :-
+
+MOD = 10**9 + 7
+class Solution:
+    def magicalSum(self, m: int, k: int, nums: List[int]) -> int:
+        @lru_cache(None)
+        def dfs(remaining, target_ones, index, carry):
+            if remaining < 0 or target_ones < 0 or remaining + carry.bit_count() < target_ones:
+                return 0
+      
+            if remaining == 0:
+                return 1 if target_ones == carry.bit_count() else 0
+
+            if index >= len(nums):
+                return 0
+            
+            ans = 0
+
+            for take in range(remaining + 1):
+                ways = math.comb(remaining, take) * pow(nums[index], take, MOD) % MOD
+                
+                new_carry = carry + take
+                ans += ways * dfs(remaining - take, target_ones - (new_carry % 2), index + 1, new_carry // 2)
+                ans %= MOD
+            
+            return ans
+        
+        return dfs(m, k, 0, 0)
