@@ -1,0 +1,31 @@
+# Lexicographically Smallest String After Applying Operations :-
+
+def findLexSmallestString(self, s: str, a: int, b: int) -> str:
+        visited = set()
+        q = deque([s])
+        smallest = s
+
+        while q:
+            cur = q.popleft()
+            if cur in visited:
+                continue
+            visited.add(cur)
+
+            # Update smallest string found so far
+            if cur < smallest:
+                smallest = cur
+
+            # Operation 1: Add 'a' to digits at odd indices
+            chars = list(cur)
+            for i in range(1, len(chars), 2):
+                chars[i] = str((int(chars[i]) + a) % 10)
+            add_a = ''.join(chars)
+
+            # Operation 2: Rotate right by b positions
+            rotate_b = cur[-b:] + cur[:-b]
+
+            # Add both new states to queue
+            q.append(add_a)
+            q.append(rotate_b)
+
+        return smallest
