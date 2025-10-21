@@ -1,0 +1,47 @@
+# Maximum Frequency of an Element After Performing Operations I :-
+
+def maxFrequency(self, nums: List[int], k: int, numOperations: int) -> int:
+        n = len(nums)
+        if n == 0:
+            return 0
+
+        # frequency of exact numbers
+        freq = defaultdict(int)
+        for x in nums:
+            freq[x] += 1
+
+        # build interval events: +1 at L, -1 at R+1
+        events = defaultdict(int)
+        for x in nums:
+            L = x - k
+            R = x + k
+            events[L] += 1
+            events[R + 1] -= 1
+
+        # coordinates to visit: all event keys and all nums values
+        coords = set(events.keys()) | set(freq.keys())
+        coords = sorted(coords)
+
+        current_cover = 0
+        ans = 1
+
+        for i, c in enumerate(coords):
+            current_cover += events.get(c, 0)
+
+            if c in freq:
+                candidate = min(current_cover, freq[c] + numOperations)
+                if candidate > ans:
+                    ans = candidate
+
+            if i + 1 < len(coords):
+                next_c = coords[i + 1]
+                if c <= next_c - 1:
+                    candidate_gap = min(current_cover, numOperations)
+                    if candidate_gap > ans:
+                        ans = candidate_gap
+            else:
+                candidate_gap = min(current_cover, numOperations)
+                if candidate_gap > ans:
+                    ans = candidate_gap
+
+        return min(ans, n)
