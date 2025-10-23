@@ -1,0 +1,12 @@
+# Check If Digits Are Equal in String After Operations I :-
+
+def hasSameDigits(self, s: str) -> bool:
+        while len(s) > 2:
+            new_s = ""
+            for i in range(len(s)-1):
+                x = (int(s[i]) + int(s[i +1])) % 10
+                new_s += str(x)
+            
+            s = new_s
+        
+        return new_s[0] == new_s[1]
