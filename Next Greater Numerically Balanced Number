@@ -1,0 +1,14 @@
+class Solution:
+    def funC(self, x):
+        s = str(x)
+        for d in set(s):
+            if s.count(d) != int(d):
+                return False
+        return True
+
+    def nextBeautifulNumber(self, n: int) -> int:
+        x = n + 1
+        while True:
+            if self.funC(x):
+                return x
+            x += 1
