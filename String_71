@@ -1,0 +1,17 @@
+# Number of Laser Beams in a Bank :-
+
+def numberOfBeams(self, bank: List[str]) -> int:
+        arr = []
+        for b in bank:
+            if "1" in b:
+                arr.append(b.count("1"))
+
+        if len(arr) < 2:
+            return 0
+
+        ans = 0
+        for i in range(len(arr)-1):
+            ans += (int(arr[i]) * int(arr[i+1]))
+
+        return ans
+
