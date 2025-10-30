@@ -1,0 +1,10 @@
+# Minimum Number of Increments on Subarrays to Form a Target Array :-
+
+def minNumberOperations(self, target: List[int]) -> int:
+        n = len(target)
+        prev, res = 0, 0
+        for i in range(n):
+            if target[i] > prev:
+                res += (target[i] - prev)
+            prev = target[i]
+        return res
