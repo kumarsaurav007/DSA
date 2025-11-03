@@ -1,0 +1,17 @@
+# Minimum Time to Make Rope Colorful :-
+
+def minCost(self, colors: str, neededTime: List[int]) -> int:
+        ans = 0
+        i = 0
+        j = 1
+        
+        while i < len(colors) -  1 and j < len(colors):
+            if colors[i] == colors[j]:
+                ans += min(neededTime[i], neededTime[j])
+                if neededTime[i] > neededTime[j]:
+                    neededTime[i], neededTime[j] = neededTime[j], neededTime[i]
+            
+            i += 1
+            j += 1
+        
+        return ans
