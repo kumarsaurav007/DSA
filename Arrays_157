@@ -1,0 +1,20 @@
+# Find X-Sum of All K-Long Subarrays I :-
+
+def findXSum(self, nums: List[int], k: int, x: int) -> List[int]:
+        n = len(nums)
+        ans = []
+        
+        for i in range(n - k + 1):
+            sub = nums[i:i + k]
+            freq = Counter(sub)
+            
+            # Sort by (frequency descending, value descending)
+            sorted_items = sorted(freq.items(), key=lambda p: (-p[1], -p[0]))
+            
+            # Take top x elements
+            top_x = {num for num, _ in sorted_items[:x]}
+            
+            # Sum only elements that are in top_x
+            ans.append(sum(num for num in sub if num in top_x))
+        
+        return ans
