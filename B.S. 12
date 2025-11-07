@@ -1,0 +1,58 @@
+# Maximize the Minimum Powered City :-
+
+class Solution:
+    def maxPower(self, stations: List[int], r: int, k: int) -> int:
+        n = len(stations)
+        
+        # Prefix sum to calculate initial power at each city
+        prefix = [0] * (n + 1)
+        for i in range(n):
+            prefix[i + 1] = prefix[i] + stations[i]
+        
+        # Compute current power of each city
+        power = [0] * n
+        for i in range(n):
+            left = max(0, i - r)
+            right = min(n - 1, i + r)
+            power[i] = prefix[right + 1] - prefix[left]
+        
+        # Helper: can we make all cities have at least `target` power?
+        def can(target):
+            added = [0] * n
+            window_sum = 0
+            used = 0
+            
+            for i in range(n):
+                # Maintain sliding sum of added stations within range r
+                if i - r - 1 >= 0:
+                    window_sum -= added[i - r - 1]
+                if i + r < n:
+                    pass  # we'll add later if needed
+
+                if power[i] + window_sum < target:
+                    need = target - (power[i] + window_sum)
+                    used += need
+                    if used > k:
+                        return False
+                    add_pos = min(n - 1, i + r)
+                    added[add_pos] += need
+                    window_sum += need
+                if i + r < n:
+                    window_sum += 0
+                if i - r >= 0:
+                    pass
+                if i < n - 1:
+                    window_sum += 0
+            return True
+        
+        # Binary search for max feasible target
+        lo, hi = 0, sum(stations) + k
+        ans = 0
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if can(mid):
+                ans = mid
+                lo = mid + 1
+            else:
+                hi = mid - 1
+        return ans
