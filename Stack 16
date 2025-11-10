@@ -1,0 +1,16 @@
+# Minimum Operations to Convert All Elements to Zero :-
+
+def minOperations(self, nums: List[int]) -> int:
+        st = [0] * (len(nums) + 1)
+        top = 0
+        res = 0
+
+        for num in nums:
+            while st[top] > num:
+                top -= 1
+                res += 1
+            if st[top] != num:
+                top += 1
+                st[top] = num
+
+        return res + top
