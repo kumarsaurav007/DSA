@@ -1,0 +1,18 @@
+# Minimum Number of Operations to Make All Array Elements Equal to 1 :-
+
+def minOperations(self, nums: List[int]) -> int:
+        if 1 in nums:
+            return len(nums) - nums.count(1)
+
+        n = len(nums)
+        ops = float('inf')
+
+        for i in range(n):
+            gcd = nums[i]
+            for j in range(i + 1, n):
+                gcd = math.gcd(gcd, nums[j])
+                if gcd == 1:
+                    ops = min(ops, j - i)
+                    break
+
+        return -1 if ops == float('inf') else n - 1 + ops
