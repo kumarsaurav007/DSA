@@ -1,0 +1,19 @@
+# Unique Length-3 Palindromic Subsequences :-
+
+def countPalindromicSubsequence(self, s: str) -> int:
+        first = {}
+        last = {}
+
+        for i, ch in enumerate(s):
+            if ch not in first:
+                first[ch] = i
+            last[ch] = i
+
+        result = 0
+
+        for x in first:
+            if last[x] - first[x] >= 2:
+                middle_chars = set(s[first[x] + 1 : last[x]])
+                result += len(middle_chars)
+
+        return result
