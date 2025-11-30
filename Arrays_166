@@ -1,0 +1,22 @@
+# Make Sum Divisible by P :-
+
+def minSubarray(self, nums: List[int], p: int) -> int:
+        total = sum(nums)
+        n = total % p
+        if n == 0:
+            return 0
+
+        s = {0: -1}
+        prefix = 0
+        res = len(nums)
+
+        for i, num in enumerate(nums):
+            prefix = (prefix + num) % p
+            target = (prefix - n) % p
+
+            if target in s:
+                res = min(res, i - s[target])
+
+            s[prefix] = i
+
+        return res if res < len(nums) else -1
