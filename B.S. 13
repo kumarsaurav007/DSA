@@ -1,0 +1,17 @@
+# Maximum Running Time of N Computers :-
+
+def maxRunTime(self, n: int, batteries: List[int]) -> int:
+        left, right = 1, sum(batteries) // n  # max possible time cannot exceed avg battery per computer
+
+        def canRun(t):
+            return sum(min(b, t) for b in batteries) >= n * t
+
+        ans = 0
+        while left <= right:
+            mid = (left + right) // 2
+            if canRun(mid):
+                ans = mid
+                left = mid + 1
+            else:
+                right = mid - 1
+        return ans
