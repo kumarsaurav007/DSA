@@ -1,0 +1,23 @@
+# Count Collisions on a Road :-
+
+def countCollisions(self, directions: str) -> int:
+        n = len(directions)
+    
+        left = 0
+        while left < n and directions[left] == 'L':
+            left += 1
+        
+        if left == n:
+            return 0
+
+        right = n - 1
+        while right >= left and directions[right] == 'R':
+            right -= 1
+
+        
+        total_collisions = 0
+        for i in range(left, right + 1):
+            if directions[i] != 'S':
+                total_collisions += 1
+                
+        return total_collisions
