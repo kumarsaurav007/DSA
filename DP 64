@@ -1,0 +1,47 @@
+# Count Partitions With Max-Min Difference at Most K :-
+
+def countPartitions(self, nums: List[int], k: int) -> int:
+        MOD = 10**9 + 7
+        n = len(nums)
+
+        dp = [0] * (n + 1)
+        pref = [0] * (n + 1)
+
+        dp[0] = 1
+        pref[0] = 1
+
+        min_dq = deque()
+        max_dq = deque()
+
+        left = 0
+
+        for right in range(n):
+            x = nums[right]
+
+            # push into max deque
+            while max_dq and max_dq[-1] < x:
+                max_dq.pop()
+            max_dq.append(x)
+
+            # push into min deque
+            while min_dq and min_dq[-1] > x:
+                min_dq.pop()
+            min_dq.append(x)
+
+            # move left pointer while invalid
+            while max_dq[0] - min_dq[0] > k:
+                if nums[left] == max_dq[0]:
+                    max_dq.popleft()
+                if nums[left] == min_dq[0]:
+                    min_dq.popleft()
+                left += 1
+
+            # dp[right+1] = sum(dp[left .. right])
+            if left == 0:
+                dp[right + 1] = pref[right] % MOD
+            else:
+                dp[right + 1] = (pref[right] - pref[left - 1]) % MOD
+
+            pref[right + 1] = (pref[right] + dp[right + 1]) % MOD
+
+        return dp[n] % MOD
