@@ -1,0 +1,25 @@
+# Count Special Triplets :-
+
+def specialTriplets(self, nums: List[int]) -> int:
+        MOD = 10**9 + 7
+
+        right = Counter(nums)
+        left = Counter()
+
+        ans = 0
+
+        for x in nums:
+            right[x] -= 1
+            if right[x] == 0:
+                del right[x]
+
+            target = x * 2
+
+            leftCount = left.get(target, 0)
+            rightCount = right.get(target, 0)
+
+            ans = (ans + leftCount * rightCount) % MOD
+
+            left[x] += 1
+
+        return ans
