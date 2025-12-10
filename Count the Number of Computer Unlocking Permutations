@@ -1,0 +1,2 @@
+def countPermutations(self, complexity: List[int]) -> int:
+        return 0 if complexity[0]>=min(complexity[1:]) else factorial(len(complexity)-1)%(10**9+7)
