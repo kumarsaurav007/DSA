@@ -1,0 +1,39 @@
+# Count Covered Buildings :-
+
+def countCoveredBuildings(self, n: int, buildings: List[List[int]]) -> int:
+        row = defaultdict(list)
+        col = defaultdict(list)
+        
+        # Fill row and column maps
+        for x, y in buildings:
+            row[x].append(y)
+            col[y].append(x)
+        
+        # Sort lists for binary comparison
+        for r in row:
+            row[r].sort()
+        for c in col:
+            col[c].sort()
+        
+        ans = 0
+        
+        for x, y in buildings:
+            ys = row[x]
+            xs = col[y]
+
+            # Check left: any y' < y
+            has_left = ys[0] < y
+            
+            # Check right: any y' > y
+            has_right = ys[-1] > y
+            
+            # Check above: any x' < x
+            has_up = xs[0] < x
+            
+            # Check below: any x' > x
+            has_down = xs[-1] > x
+            
+            if has_left and has_right and has_up and has_down:
+                ans += 1
+        
+        return ans
