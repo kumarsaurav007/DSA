@@ -1,0 +1,42 @@
+# Count Mentions Per User :-
+
+def countMentions(self, numberOfUsers: int, events: List[List[str]]) -> List[int]:
+        events.sort(key=lambda e: (int(e[1]), 0 if e[0] == "OFFLINE" else 1))
+
+        mentions = [0] * numberOfUsers
+        online = [True] * numberOfUsers
+        
+        # Min-heap for (comeback_time, user_id)
+        heap = []
+
+        for event in events:
+            event_type, time, info = event
+            time = int(time)
+
+            # Bring users back online
+            while heap and heap[0][0] <= time:
+                _, user = heapq.heappop(heap)
+                online[user] = True
+
+            if event_type == "OFFLINE":
+                user = int(info)
+                online[user] = False
+                heapq.heappush(heap, (time + 60, user))
+
+            else:  # MESSAGE
+                if info == "ALL":
+                    for u in range(numberOfUsers):
+                        mentions[u] += 1
+
+                elif info == "HERE":
+                    for u in range(numberOfUsers):
+                        if online[u]:
+                            mentions[u] += 1
+
+                else:
+                    for token in info.split():
+                        if token.startswith("id"):
+                            u = int(token[2:])
+                            mentions[u] += 1
+
+        return mentions
