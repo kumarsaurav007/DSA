@@ -1,0 +1,32 @@
+# Delete Columns to Make Sorted II :-
+
+def minDeletionSize(self, strs: List[str]) -> int:
+        n = len(strs)
+        m = len(strs[0])
+
+        # sorted[i] = True means strs[i] < strs[i+1] is already confirmed
+        sorted_pairs = [False] * (n - 1)
+        deletions = 0
+
+        for col in range(m):
+            # Check if this column violates order
+            bad = False
+            for i in range(n - 1):
+                if not sorted_pairs[i] and strs[i][col] > strs[i + 1][col]:
+                    bad = True
+                    break
+
+            if bad:
+                deletions += 1
+                continue
+
+            # Update confirmed sorted pairs
+            for i in range(n - 1):
+                if not sorted_pairs[i] and strs[i][col] < strs[i + 1][col]:
+                    sorted_pairs[i] = True
+
+            # If all pairs confirmed, we can stop early
+            if all(sorted_pairs):
+                break
+
+        return deletions
