@@ -1,0 +1,15 @@
+# Apple Redistribution into Boxes :-
+
+def minimumBoxes(self, apple: List[int], capacity: List[int]) -> int:
+        total_apple = sum(apple)
+
+        boxes = sorted(capacity, reverse=True)
+        cap = 0 
+        num_box = 0
+        for i in boxes:
+            cap += i
+            num_box += 1
+            if cap >= total_apple:
+                return num_box
+        
+        return num_box
