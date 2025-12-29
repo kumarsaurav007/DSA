@@ -1,0 +1,32 @@
+# Pyramid Transition Matrix :-
+
+def pyramidTransition(self, bottom: str, allowed: List[str]) -> bool:
+        rules = defaultdict(list)
+        for a, b, c in allowed:
+            rules[(a, b)].append(c)
+
+        @lru_cache(None)
+        def dfs(row: str) -> bool:
+            if len(row) == 1:
+                return True
+
+            # Generate all possible next rows
+            def backtrack(i, path):
+                if i == len(row) - 1:
+                    yield path
+                    return
+
+                pair = (row[i], row[i + 1])
+                if pair not in rules:
+                    return
+
+                for ch in rules[pair]:
+                    yield from backtrack(i + 1, path + ch)
+
+            for next_row in backtrack(0, ""):
+                if dfs(next_row):
+                    return True
+
+            return False
+
+        return dfs(bottom)
