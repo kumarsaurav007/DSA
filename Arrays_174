@@ -1,0 +1,8 @@
+# N-Repeated Element in Size 2N Array :-
+
+def repeatedNTimes(self, nums: List[int]) -> int:
+        num = []
+        for i in nums:
+            if i in num:
+                return i
+            num.append(i)
