@@ -1,0 +1,18 @@
+# Smallest Subtree with all the Deepest Nodes :-
+
+def subtreeWithAllDeepest(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        def dfs(node):
+            if not node:
+                return 0, None
+
+            ld, lnode = dfs(node.left)
+            rd, rnode = dfs(node.right)
+
+            if ld > rd:
+                return ld + 1, lnode
+            elif rd > ld:
+                return rd + 1, rnode
+            else:
+                return ld + 1, node
+
+        return dfs(root)[1]
