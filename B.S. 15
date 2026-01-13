@@ -1,0 +1,26 @@
+# Separate Squares I :-
+
+def separateSquares(self, squares: List[List[int]]) -> float:
+        def diff(h):
+            below = above = 0.0
+            for _, y, l in squares:
+                if h >= y + l:
+                    below += l * l
+                elif h <= y:
+                    above += l * l
+                else:
+                    below += (h - y) * l
+                    above += (y + l - h) * l
+            return below - above
+
+        low = min(y for _, y, _ in squares)
+        high = max(y + l for _, y, l in squares)
+
+        for _ in range(60):
+            mid = (low + high) / 2
+            if diff(mid) < 0:
+                low = mid
+            else:
+                high = mid
+
+        return low
