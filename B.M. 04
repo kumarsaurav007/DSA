@@ -1,0 +1,14 @@
+# Construct the Minimum Bitwise Array I :-
+
+def minBitwiseArray(self, nums: List[int]) -> List[int]:
+        ans = []
+        for i in nums:
+            found = False
+            for j in range(i+1):
+                if j | (j+1) == i:
+                    ans.append(j)
+                    found = True
+                    break
+            if not found:
+                ans.append(-1)
+        return ans
