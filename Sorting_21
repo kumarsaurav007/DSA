@@ -1,0 +1,17 @@
+# Minimize Maximum Pair Sum in Array :-
+
+def minPairSum(self, nums: List[int]) -> int:
+        nums.sort()
+        n = len(nums)
+
+        p1 = 0
+        p2 = n - 1
+
+        ans = 0
+        while p1 < p2:
+            pair_sum = nums[p1] + nums[p2]
+            ans = max(ans, pair_sum)
+            p1 += 1
+            p2 -= 1
+        
+        return ans
