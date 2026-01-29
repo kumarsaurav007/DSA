@@ -1,0 +1,31 @@
+# Minimum Cost to Convert String I :-
+
+def minimumCost(self, source: str, target: str, original: List[str], changed: List[str], cost: List[int]) -> int:
+        dist = [[float('inf')] * 26 for _ in range(26)]
+        
+        for i in range(26):
+            dist[i][i] = 0
+            
+        for i in range(len(cost)):
+            u = ord(original[i]) - ord('a')
+            v = ord(changed[i]) - ord('a')
+            dist[u][v] = min(dist[u][v], cost[i])
+            
+        for k in range(26):
+            for i in range(26):
+                for j in range(26):
+                    if dist[i][k] + dist[k][j] < dist[i][j]:
+                        dist[i][j] = dist[i][k] + dist[k][j]
+                        
+        total_cost = 0
+        for s, t in zip(source, target):
+            if s == t:
+                continue
+            
+            u, v = ord(s) - ord('a'), ord(t) - ord('a')
+            if dist[u][v] == float('inf'):
+                return -1
+            
+            total_cost += dist[u][v]
+            
+        return total_cost
