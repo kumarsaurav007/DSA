@@ -1,0 +1,49 @@
+# Minimum Cost to Convert String II :-
+
+def minimumCost(self, source: str, target: str, original: List[str], changed: List[str], cost: List[int]) -> int:
+        n = len(source)
+        INF = 10**18
+
+        words = set(original) | set(changed)
+        word_id = {w: i for i, w in enumerate(words)}
+        m = len(words)
+
+        dist = [[INF] * m for _ in range(m)]
+        for i in range(m):
+            dist[i][i] = 0
+
+        for o, c, z in zip(original, changed, cost):
+            dist[word_id[o]][word_id[c]] = min(
+                dist[word_id[o]][word_id[c]], z
+            )
+
+        for k in range(m):
+            for i in range(m):
+                for j in range(m):
+                    if dist[i][k] + dist[k][j] < dist[i][j]:
+                        dist[i][j] = dist[i][k] + dist[k][j]
+
+        by_len = defaultdict(list)
+        for o in original:
+            by_len[len(o)].append(o)
+
+        dp = [INF] * (n + 1)
+        dp[n] = 0
+
+        for i in range(n - 1, -1, -1):
+            if source[i] == target[i]:
+                dp[i] = dp[i + 1]
+
+            for L in by_len:
+                if i + L > n:
+                    continue
+
+                src_sub = source[i:i + L]
+                tgt_sub = target[i:i + L]
+
+                if src_sub in word_id and tgt_sub in word_id:
+                    c = dist[word_id[src_sub]][word_id[tgt_sub]]
+                    if c < INF:
+                        dp[i] = min(dp[i], c + dp[i + L])
+
+        return -1 if dp[0] == INF else dp[0]
