@@ -1,0 +1,16 @@
+# Binary Gap :-
+
+def binaryGap(self, n: int) -> int:
+        binary_n = bin(n)[2:]
+
+        count = 0
+        last_one = None
+
+        for i in range(len(binary_n)):
+            if binary_n[i] == '1':
+                if last_one is not None:
+                    count = max(count, i - last_one)
+            
+                last_one = i
+
+        return count
