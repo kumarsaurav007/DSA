@@ -1,0 +1,18 @@
+# Number of Steps to Reduce a Number in Binary Representation to One :-
+
+def numSteps(self, s: str) -> int:
+        steps = 0
+        carry = 0
+
+        # traverse from right to left (except first bit)
+        for i in range(len(s) - 1, 0, -1):
+            bit = int(s[i])
+
+            # if current bit + carry == 1 -> odd
+            if bit + carry == 1:
+                steps += 2   # +1 operation and /2 operation
+                carry = 1    # carry will propagate
+            else:
+                steps += 1   # just divide by 2
+
+        return steps + carry 
