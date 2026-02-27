@@ -1,0 +1,25 @@
+# Minimum Operations to Equalize Binary String :-
+
+def ceil(x, y):
+    return (x + y - 1) // y
+
+class Solution:
+    def minOperations(self, s: str, k: int) -> int:
+        n = len(s)
+        zeros = s.count('0')
+        
+        if n == k:
+            return 0 if zeros == 0 else 1 if zeros == n else -1
+        
+        ans = inf
+        if zeros % 2 == 0:
+            m = max(ceil(zeros, k), ceil(zeros, n - k))
+            m += m & 1
+            ans = min(ans, m)
+
+        if zeros % 2 == k % 2:
+            m = max(ceil(zeros, k), ceil(n - zeros, n - k))
+            m += m & 1 == 0
+            ans = min(ans, m)
+
+        return ans if ans < inf else -1
