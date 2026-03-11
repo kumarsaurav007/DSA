@@ -1,0 +1,12 @@
+# Complement of Base 10 Integer :-
+
+def bitwiseComplement(self, n: int) -> int:
+        ans = ""
+        bin_n = bin(n)[2:]
+
+        for i in bin_n:
+            x = 1
+            x ^= int(i)
+            ans += str(x)
+
+        return int(ans,2)
