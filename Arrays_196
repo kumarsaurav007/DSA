@@ -1,0 +1,26 @@
+# Largest Submatrix With Rearrangements :-
+
+def largestSubmatrix(self, matrix: List[List[int]]) -> int:
+        m, n = len(matrix), len(matrix[0])
+        
+        height = [0] * n
+        max_area = 0
+        
+        for i in range(m):
+            
+            # update heights
+            for j in range(n):
+                if matrix[i][j] == 1:
+                    height[j] += 1
+                else:
+                    height[j] = 0
+            
+            # sort descending
+            sorted_h = sorted(height, reverse=True)
+            
+            # compute max area
+            for j in range(n):
+                area = sorted_h[j] * (j + 1)
+                max_area = max(max_area, area)
+        
+        return max_area
