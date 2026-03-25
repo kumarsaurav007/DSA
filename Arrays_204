@@ -1,0 +1,33 @@
+# Equal Sum Grid Partition I :-
+
+def canPartitionGrid(self, grid: List[List[int]]) -> bool:
+        m, n = len(grid), len(grid[0])
+        
+        total = sum(sum(row) for row in grid)
+        
+        # if total is odd → impossible
+        if total % 2 != 0:
+            return False
+        
+        target = total // 2
+        
+        # check horizontal cuts
+        curr = 0
+        for i in range(m - 1):  # ensure non-empty below
+            curr += sum(grid[i])
+            if curr == target:
+                return True
+        
+        # check vertical cuts
+        col_sum = [0] * n
+        for i in range(m):
+            for j in range(n):
+                col_sum[j] += grid[i][j]
+        
+        curr = 0
+        for j in range(n - 1):  # ensure non-empty right
+            curr += col_sum[j]
+            if curr == target:
+                return True
+        
+        return False
