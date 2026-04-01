@@ -1,0 +1,35 @@
+# Robot Collisions :-
+
+def survivedRobotsHealths(self, positions: List[int], healths: List[int], directions: str) -> List[int]:
+        n = len(positions)
+        
+        robots = sorted(range(n), key=lambda i : positions[i])
+        
+        stack = []
+        alive = [True] * n
+        health = healths[:] 
+        
+        for i in robots:
+            if directions[i] == 'R':
+                stack.append(i)
+
+            else:
+                while stack:
+                    top = stack[-1]
+                    if health[top] < health[i]:
+                        alive[top] = False
+                        stack.pop()
+                        health[i] -= 1
+                    
+                    elif health[top] > health[i]:
+                        alive[i] = False
+                        health[top] -= 1
+                        break
+                    
+                    else:
+                        alive[top] = False
+                        alive[i] = False
+                        stack.pop()
+                        break
+
+        return [health[i] for i in range(n) if alive[i]]
