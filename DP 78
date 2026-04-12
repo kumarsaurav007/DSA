@@ -1,0 +1,31 @@
+# Minimum Distance to Type a Word Using Two Fingers :-
+
+def minimumDistance(self, word: str) -> int:
+        def dist(a, b):
+            if a == -1:
+                return 0
+            x1, y1 = divmod(a, 6)
+            x2, y2 = divmod(b, 6)
+            return abs(x1 - x2) + abs(y1 - y2)
+        
+        dp = {(-1, -1): 0}  # (finger1, finger2) -> cost
+        
+        for ch in word:
+            curr = ord(ch) - ord('A')
+            new_dp = {}
+            
+            for (f1, f2), cost in dp.items():
+                
+                # Move finger1
+                new_state = (curr, f2)
+                new_cost = cost + dist(f1, curr)
+                new_dp[new_state] = min(new_dp.get(new_state, float('inf')), new_cost)
+                
+                # Move finger2
+                new_state = (f1, curr)
+                new_cost = cost + dist(f2, curr)
+                new_dp[new_state] = min(new_dp.get(new_state, float('inf')), new_cost)
+            
+            dp = new_dp
+        
+        return min(dp.values())
