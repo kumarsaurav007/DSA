@@ -1,0 +1,12 @@
+# Minimum Distance to the Target Element :-
+
+def getMinDistance(self, nums: List[int], target: int, start: int) -> int:
+        n = len(nums)
+        ans = float('inf')
+
+        for i in range(n):
+            if nums[i] == target:
+                min_dist = abs(i - start)
+                ans = min(ans, min_dist)
+        
+        return ans
