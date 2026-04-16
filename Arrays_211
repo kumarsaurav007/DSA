@@ -1,0 +1,36 @@
+# Closest Equal Element Queries :-
+
+def solveQueries(self, nums: List[int], queries: List[int]) -> List[int]:
+        n = len(nums)
+        
+        # Step 1: map value -> indices
+        pos = defaultdict(list)
+        for i, num in enumerate(nums):
+            pos[num].append(i)
+        
+        res = []
+        
+        # Step 2: process queries
+        for q in queries:
+            val = nums[q]
+            indices = pos[val]
+            
+            # If only one occurrence
+            if len(indices) == 1:
+                res.append(-1)
+                continue
+            
+            # Find position of q
+            i = bisect.bisect_left(indices, q)
+            
+            # neighbors (circular)
+            left = indices[i - 1] if i > 0 else indices[-1]
+            right = indices[i + 1] if i < len(indices) - 1 else indices[0]
+            
+            # compute distances
+            d1 = min(abs(q - left), n - abs(q - left))
+            d2 = min(abs(q - right), n - abs(q - right))
+            
+            res.append(min(d1, d2))
+        
+        return res
