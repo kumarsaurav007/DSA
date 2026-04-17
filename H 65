@@ -1,0 +1,14 @@
+# Minimum Absolute Distance Between Mirror Pairs :-
+
+def minMirrorPairDistance(self, nums: List[int]) -> int:
+        seen = {}
+        ans = float('inf')
+
+        for i, num in enumerate(nums):
+            rev = int(str(num)[::-1])
+            if num in seen:
+                ans = min(ans, i - seen[num])
+
+            seen[rev] = i
+        
+        return ans if ans != float('inf') else -1
