@@ -1,0 +1,33 @@
+# Sum of Distances :-
+
+def distance(self, nums: List[int]) -> List[int]:
+        pos = defaultdict(list)
+        
+        # Step 1: group indices
+        for i, num in enumerate(nums):
+            pos[num].append(i)
+        
+        res = [0] * len(nums)
+        
+        # Step 2: process each group
+        for indices in pos.values():
+            prefix = [0]
+            
+            # build prefix sum
+            for x in indices:
+                prefix.append(prefix[-1] + x)
+            
+            k = len(indices)
+            
+            for i in range(k):
+                idx = indices[i]
+                
+                # left
+                left = idx * i - prefix[i]
+                
+                # right
+                right = (prefix[k] - prefix[i+1]) - idx * (k - i - 1)
+                
+                res[idx] = left + right
+        
+        return res
