@@ -1,0 +1,34 @@
+# Maximum Path Score in a Grid :-
+
+def maxPathScore(self, grid: List[List[int]], k: int) -> int:
+        m, n = len(grid), len(grid[0])
+
+        dp = [[-1] * (k + 1) for _ in range(n)]
+        dp[0][0] = 0
+
+        for i in range(m):
+            cur = [[-1] * (k + 1) for _ in range(n)]
+
+            for j in range(n):
+                for c in range(k + 1):
+
+                    # from top
+                    if dp[j][c] != -1:
+                        val = grid[i][j]
+                        cost = 1 if val in (1, 2) else 0
+                        nc = c + cost
+                        if nc <= k:
+                            cur[j][nc] = max(cur[j][nc], dp[j][c] + val)
+
+                    # from left
+                    if j > 0 and cur[j - 1][c] != -1:
+                        val = grid[i][j]
+                        cost = 1 if val in (1, 2) else 0
+                        nc = c + cost
+                        if nc <= k:
+                            cur[j][nc] = max(cur[j][nc], cur[j - 1][c] + val)
+
+            dp = cur
+
+        res = max(dp[n - 1])
+        return res if res != -1 else -1
