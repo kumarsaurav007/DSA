@@ -1,0 +1,62 @@
+# Minimum Jumps to Reach End via Prime Teleportation :-
+
+def minJumps(self, nums: List[int]) -> int:
+        n = len(nums)
+
+        def is_prime(x):
+            if x < 2:
+                return False
+            i = 2
+            while i * i <= x:
+                if x % i == 0:
+                    return False
+                i += 1
+            return True
+
+        mp = defaultdict(list)
+
+        # store indices divisible by prime p
+        for i, x in enumerate(nums):
+            d = 2
+            y = x
+
+            while d * d <= y:
+                if y % d == 0:
+                    mp[d].append(i)
+                    while y % d == 0:
+                        y //= d
+                d += 1
+
+            if y > 1:
+                mp[y].append(i)
+
+        q = deque([0])
+        vis = {0}
+        used = set()
+        steps = 0
+
+        while q:
+            for _ in range(len(q)):
+                i = q.popleft()
+
+                if i == n - 1:
+                    return steps
+
+                # adjacent
+                for ni in [i - 1, i + 1]:
+                    if 0 <= ni < n and ni not in vis:
+                        vis.add(ni)
+                        q.append(ni)
+
+                # teleport
+                if is_prime(nums[i]) and nums[i] not in used:
+                    for ni in mp[nums[i]]:
+                        if ni not in vis:
+                            vis.add(ni)
+                            q.append(ni)
+
+                    used.add(nums[i])
+
+            steps += 1
+
+        return -1
