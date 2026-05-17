@@ -1,0 +1,17 @@
+# Jump Game III :-
+
+def canReach(self, arr: List[int], start: int) -> bool:
+        n = len(arr)
+
+        def dfs(i):
+            if i < 0 or i >= n or arr[i] < 0:
+                return False
+            if arr[i] == 0:
+                return True
+
+            jump = arr[i]
+            arr[i] = -1  # mark visited
+
+            return dfs(i + jump) or dfs(i - jump)
+
+        return dfs(start)
