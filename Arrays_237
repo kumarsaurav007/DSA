@@ -1,0 +1,12 @@
+# Count the Number of Special Characters I :-
+
+def numberOfSpecialChars(self, word: str) -> int:
+        seen = set()
+        count = 0
+        
+        for i in word:
+            if i.islower() and i not in seen and i.upper() in word:
+                seen.add(i)
+                count += 1
+        
+        return count
