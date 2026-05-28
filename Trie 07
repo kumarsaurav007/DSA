@@ -1,0 +1,50 @@
+# Longest Common Suffix Queries :-
+
+from typing import List
+
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.idx = -1
+        self.length = float('inf')
+
+
+class Solution:
+    def stringIndices(self, wordsContainer: List[str], wordsQuery: List[str]) -> List[int]:
+
+        root = TrieNode()
+
+        def update(node, length, idx):
+            if length < node.length:
+                node.length = length
+                node.idx = idx
+
+        # build trie
+        for idx, word in enumerate(wordsContainer):
+            rev_word = word[::-1]
+
+            node = root
+            update(node, len(word), idx)
+
+            for ch in rev_word:
+                if ch not in node.children:
+                    node.children[ch] = TrieNode()
+
+                node = node.children[ch]
+                update(node, len(word), idx)
+
+        ans = []
+
+        # process queries
+        for word in wordsQuery:
+            node = root
+
+            for ch in word[::-1]:
+                if ch not in node.children:
+                    break
+                node = node.children[ch]
+
+            ans.append(node.idx)
+
+        return ans
