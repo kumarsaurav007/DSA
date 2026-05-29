@@ -1,0 +1,10 @@
+# Minimum Element After Replacement With Digit Sum :-
+
+def minElement(self, nums: List[int]) -> int:
+        res = []
+        for i in nums:
+            ele = 0
+            for j in str(i):
+                ele += int(j)
+            res.append(ele)
+        return min(res)
