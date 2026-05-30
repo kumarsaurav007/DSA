@@ -1,0 +1,101 @@
+# Block Placement Queries :-
+
+from sortedcontainers import SortedList
+from typing import List
+
+
+class SegmentTree:
+    def __init__(self, n):
+        self.n = n
+        self.tree = [0] * (4 * n)
+
+    def update(self, node, start, end, idx, val):
+        if start == end:
+            self.tree[node] = val
+            return
+
+        mid = (start + end) // 2
+
+        if idx <= mid:
+            self.update(node * 2, start, mid, idx, val)
+        else:
+            self.update(node * 2 + 1, mid + 1, end, idx, val)
+
+        self.tree[node] = max(
+            self.tree[node * 2],
+            self.tree[node * 2 + 1]
+        )
+
+    def query(self, node, start, end, l, r):
+        if r < start or end < l:
+            return 0
+
+        if l <= start and end <= r:
+            return self.tree[node]
+
+        mid = (start + end) // 2
+
+        return max(
+            self.query(node * 2, start, mid, l, r),
+            self.query(node * 2 + 1, mid + 1, end, l, r)
+        )
+
+
+class Solution:
+    def getResults(self, queries: List[List[int]]) -> List[bool]:
+        MAX_X = 50000
+
+        obstacles = SortedList([0])
+        seg = SegmentTree(MAX_X + 1)
+
+        ans = []
+
+        for q in queries:
+
+            if q[0] == 1:
+                x = q[1]
+
+                idx = obstacles.bisect_left(x)
+
+                prev_obs = obstacles[idx - 1]
+                next_obs = (
+                    obstacles[idx]
+                    if idx < len(obstacles)
+                    else MAX_X
+                )
+
+                obstacles.add(x)
+
+                seg.update(1, 0, MAX_X, x, x - prev_obs)
+
+                if next_obs != MAX_X:
+                    seg.update(
+                        1,
+                        0,
+                        MAX_X,
+                        next_obs,
+                        next_obs - x
+                    )
+
+            else:
+                _, x, sz = q
+
+                idx = obstacles.bisect_right(x) - 1
+                last_obs = obstacles[idx]
+
+                max_gap = seg.query(
+                    1,
+                    0,
+                    MAX_X,
+                    0,
+                    x
+                )
+
+                possible = max(
+                    max_gap,
+                    x - last_obs
+                ) >= sz
+
+                ans.append(possible)
+
+        return ans
