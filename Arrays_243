@@ -1,0 +1,69 @@
+# Earliest Finish Time for Land and Water Rides II :-
+
+def earliestFinishTime(self, landStartTime: List[int], landDuration: List[int], waterStartTime: List[int], waterDuration: List[int]) -> int:
+        def build(start, dur):
+            rides = sorted(zip(start, dur))
+            starts = [s for s, _ in rides]
+
+            n = len(rides)
+
+            prefix_min_dur = [0] * n
+            prefix_min_dur[0] = rides[0][1]
+
+            for i in range(1, n):
+                prefix_min_dur[i] = min(prefix_min_dur[i - 1], rides[i][1])
+
+            suffix_min_finish = [0] * n
+            suffix_min_finish[-1] = rides[-1][0] + rides[-1][1]
+
+            for i in range(n - 2, -1, -1):
+                suffix_min_finish[i] = min(
+                    suffix_min_finish[i + 1],
+                    rides[i][0] + rides[i][1]
+                )
+
+            return starts, prefix_min_dur, suffix_min_finish
+
+        water_starts, water_pref, water_suff = build(
+            waterStartTime, waterDuration
+        )
+
+        land_starts, land_pref, land_suff = build(
+            landStartTime, landDuration
+        )
+
+        ans = float("inf")
+
+        # Land -> Water
+        for s, d in zip(landStartTime, landDuration):
+            t = s + d
+
+            idx = bisect_right(water_starts, t) - 1
+
+            best = float("inf")
+
+            if idx >= 0:
+                best = min(best, t + water_pref[idx])
+
+            if idx + 1 < len(water_starts):
+                best = min(best, water_suff[idx + 1])
+
+            ans = min(ans, best)
+
+        # Water -> Land
+        for s, d in zip(waterStartTime, waterDuration):
+            t = s + d
+
+            idx = bisect_right(land_starts, t) - 1
+
+            best = float("inf")
+
+            if idx >= 0:
+                best = min(best, t + land_pref[idx])
+
+            if idx + 1 < len(land_starts):
+                best = min(best, land_suff[idx + 1])
+
+            ans = min(ans, best)
+
+        return ans
