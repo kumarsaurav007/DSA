@@ -1,0 +1,18 @@
+# Process String with Special Operations I :-
+
+def processStr(self, s: str) -> str:
+        output = []
+
+        for i in s:
+            if i == '*':
+                if output:
+                    output.pop()
+            elif i == '%':
+                output.reverse()
+            elif i == '#':
+                if output:
+                    output.extend(output)
+            else:
+                output.append(i)
+
+        return "".join(output)
