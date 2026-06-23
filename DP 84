@@ -1,0 +1,37 @@
+# Number of ZigZag Arrays I :-
+
+def zigZagArrays(self, n: int, l: int, r: int) -> int:
+        MOD = 10**9 + 7
+        m = r - l + 1
+
+        # length = 2
+        up = [i for i in range(m)]
+        down = [m - 1 - i for i in range(m)]
+
+        if n == 2:
+            return (sum(up) + sum(down)) % MOD
+
+        for _ in range(3, n + 1):
+            # prefix sums of down
+            pref_down = [0] * (m + 1)
+            for i in range(m):
+                pref_down[i + 1] = (pref_down[i] + down[i]) % MOD
+
+            new_up = [0] * m
+            for v in range(m):
+                new_up[v] = pref_down[v]
+
+            # prefix sums of up
+            pref_up = [0] * (m + 1)
+            for i in range(m):
+                pref_up[i + 1] = (pref_up[i] + up[i]) % MOD
+
+            total_up = pref_up[m]
+
+            new_down = [0] * m
+            for v in range(m):
+                new_down[v] = (total_up - pref_up[v + 1]) % MOD
+
+            up, down = new_up, new_down
+
+        return (sum(up) + sum(down)) % MOD
