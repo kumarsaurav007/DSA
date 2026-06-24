@@ -1,0 +1,83 @@
+# Number of ZigZag Arrays II :-
+
+def zigZagArrays(self, n: int, l: int, r: int) -> int:
+        MOD = 10**9 + 7
+        m = r - l + 1
+
+        if n == 1:
+            return m
+
+        def mat_mul(A, B):
+            sz = len(A)
+            res = [[0] * sz for _ in range(sz)]
+
+            for i in range(sz):
+                for k in range(sz):
+                    if A[i][k] == 0:
+                        continue
+                    a = A[i][k]
+                    row = B[k]
+                    for j in range(sz):
+                        if row[j]:
+                            res[i][j] = (
+                                res[i][j] + a * row[j]
+                            ) % MOD
+            return res
+
+        def mat_vec(M, v):
+            sz = len(M)
+            res = [0] * sz
+
+            for i in range(sz):
+                s = 0
+                row = M[i]
+                for j in range(sz):
+                    if row[j]:
+                        s = (s + row[j] * v[j]) % MOD
+                res[i] = s
+
+            return res
+
+        def apply_power(M, p, vec):
+            res = vec[:]
+            base = M
+
+            while p:
+                if p & 1:
+                    res = mat_vec(base, res)
+
+                base = mat_mul(base, base)
+                p >>= 1
+
+            return res
+
+        # build A and B
+        A = [[0] * m for _ in range(m)]
+        B = [[0] * m for _ in range(m)]
+
+        for i in range(m):
+            for j in range(i):
+                A[i][j] = 1
+            for j in range(i + 1, m):
+                B[i][j] = 1
+
+        C = mat_mul(B, A)
+        D = mat_mul(A, B)
+
+        t = n - 1
+        k = t // 2
+
+        start = [1] * m
+
+        # starts with '<'
+        up = apply_power(C, k, start)
+        if t % 2 == 1:
+            up = mat_vec(A, up)
+
+        # starts with '>'
+        down = apply_power(D, k, start)
+        if t % 2 == 1:
+            down = mat_vec(B, down)
+
+        ans = (sum(up) + sum(down)) % MOD
+        return ans
