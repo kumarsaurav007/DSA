@@ -1,0 +1,14 @@
+# Concatenate Non-Zero Digits and Multiply by Sum I :-
+
+def sumAndMultiply(self, n: int) -> int:
+        str_n = str(n)
+        str_x = ""
+
+        for i in str_n:
+            if i != "0":
+                str_x += i
+        
+        x = int(str_x) if str_x else 0
+        s = sum(int(ch) for ch in str_x)
+
+        return x*s
