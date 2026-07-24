@@ -1,0 +1,16 @@
+# Number of Unique XOR Triplets II :-
+
+def uniqueXorTriplets(self, nums: List[int]) -> int:
+        MAX = 2048
+
+        dp = [[False] * MAX for _ in range(4)]
+        dp[0][0] = True
+
+        for t in range(3):
+            for x in range(MAX):
+                if not dp[t][x]:
+                    continue
+                for v in nums:
+                    dp[t + 1][x ^ v] = True
+
+        return sum(dp[3])
