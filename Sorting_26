@@ -1,0 +1,6 @@
+# Maximum Product of Two Digits :-
+
+def maxProduct(self, n: int) -> int:
+        list_n = [i for i in str(n)]
+        list_n.sort()
+        return int(list_n[-1]) * int(list_n[-2])
