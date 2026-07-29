@@ -1,0 +1,53 @@
+# Smallest Palindromic Rearrangement II :-
+
+def smallestPalindrome(self, s: str, k: int) -> str:
+        cnt = Counter(s)
+
+        half = [0] * 26
+        mid = ""
+
+        total = 0
+        for ch, f in cnt.items():
+            half[ord(ch) - ord('a')] = f // 2
+            total += f // 2
+            if f % 2:
+                mid = ch
+
+        LIMIT = k
+
+        def ways():
+            rem = sum(half)
+            ans = 1
+            left = rem
+
+            for c in half:
+                if c:
+                    ans *= comb(left, c)
+                    if ans > LIMIT:
+                        return LIMIT + 1
+                    left -= c
+
+            return ans
+
+        if ways() < k:
+            return ""
+
+        left = []
+
+        while sum(half):
+            for i in range(26):
+                if half[i] == 0:
+                    continue
+
+                half[i] -= 1
+                w = ways()
+
+                if w >= k:
+                    left.append(chr(i + ord('a')))
+                    break
+
+                k -= w
+                half[i] += 1
+
+        left = "".join(left)
+        return left + mid + left[::-1]
