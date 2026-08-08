@@ -1,0 +1,48 @@
+# Find the Lexicographically Smallest Valid Sequence :-
+
+def validSequence(self, word1: str, word2: str) -> List[int]:
+        n = len(word1)
+        m = len(word2)
+
+        # suf[i] = largest number of characters from the end
+        # of word2 that can be matched using word1[i:].
+        suf = [0] * (n + 1)
+
+        j = m - 1
+
+        for i in range(n - 1, -1, -1):
+            suf[i] = suf[i + 1]
+
+            if j >= 0 and word1[i] == word2[j]:
+                suf[i] += 1
+                j -= 1
+
+        ans = []
+        pos = 0
+        changed = False
+
+        for j in range(m):
+            while pos < n:
+                # Exact match
+                if word1[pos] == word2[j]:
+                    ans.append(pos)
+                    pos += 1
+                    break
+
+                # Use the one allowed modification.
+                # After selecting pos, we need to match
+                # word2[j+1:] exactly.
+                remaining = m - j - 1
+
+                if not changed and suf[pos + 1] >= remaining:
+                    ans.append(pos)
+                    pos += 1
+                    changed = True
+                    break
+
+                pos += 1
+
+            else:
+                return []
+
+        return ans
