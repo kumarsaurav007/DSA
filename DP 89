@@ -1,0 +1,31 @@
+# Stone Game II :-
+
+def stoneGameII(self, piles: List[int]) -> int:
+        n = len(piles)
+
+        # suffix[i] = sum of piles[i:]
+        suffix = [0] * (n + 1)
+
+        for i in range(n - 1, -1, -1):
+            suffix[i] = suffix[i + 1] + piles[i]
+
+        @lru_cache(None)
+        def dp(i, M):
+            # Can take all remaining piles
+            if i + 2 * M >= n:
+                return suffix[i]
+
+            # Bob's best result should be minimized
+            # because whatever Bob gets comes out of
+            # the remaining total.
+            bob_best = float('inf')
+
+            for X in range(1, 2 * M + 1):
+                bob_best = min(
+                    bob_best,
+                    dp(i + X, max(M, X))
+                )
+
+            return suffix[i] - bob_best
+
+        return dp(0, 1)
