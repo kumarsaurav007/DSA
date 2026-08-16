@@ -1,0 +1,25 @@
+# Stone Game IX :-
+
+def stoneGameIX(self, stones: List[int]) -> bool:
+        cnt = [0, 0, 0]
+
+        for x in stones:
+            cnt[x % 3] += 1
+
+        zero = cnt[0]
+        one = cnt[1]
+        two = cnt[2]
+
+        # No 1 or 2 remainder stones.
+        if one == 0 and two == 0:
+            return False
+
+        # If number of 0-remainder stones is even,
+        # Alice wins iff both 1 and 2 exist.
+        if zero % 2 == 0:
+            return one > 0 and two > 0
+
+        # zero is odd
+        # Alice wins if the larger group exceeds
+        # the smaller group by at least 3.
+        return abs(one - two) > 2
