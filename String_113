@@ -1,0 +1,18 @@
+# Sum Game :-
+
+def sumGame(self, num: str) -> bool:
+        n = len(num) // 2
+
+        left = num[:n]
+        right = num[n:]
+
+        q1 = left.count('?')
+        q2 = right.count('?')
+
+        s1 = sum(int(c) for c in left if c != '?')
+        s2 = sum(int(c) for c in right if c != '?')
+
+        if (q1 + q2) % 2:
+            return True
+
+        return 2 * (s1 - s2) != 9 * (q2 - q1)
