@@ -1,0 +1,11 @@
+# Smallest Missing Multiple of K :-
+
+def missingMultiple(self, nums: List[int], k: int) -> int:
+        num = set(nums)
+
+        missing_num = k
+
+        while missing_num in num:
+            missing_num += k
+
+        return missing_num
