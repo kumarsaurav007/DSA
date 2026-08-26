@@ -1,0 +1,30 @@
+# Shortest and Lexicographically Smallest Beautiful String :-
+
+def shortestBeautifulSubstring(self, s: str, k: int) -> str:
+        n = len(s)
+        left = 0
+        ones = 0
+        min_len = float('inf')
+        ans = ""
+
+        for right in range(n):
+            if s[right] == '1':
+                ones += 1
+
+            # We have exactly k ones
+            while ones == k:
+                curr_len = right - left + 1
+                curr = s[left:right + 1]
+
+                if curr_len < min_len:
+                    min_len = curr_len
+                    ans = curr
+                elif curr_len == min_len and curr < ans:
+                    ans = curr
+
+                # Move left to find a shorter valid substring
+                if s[left] == '1':
+                    ones -= 1
+                left += 1
+
+        return ans
