@@ -1,0 +1,28 @@
+# Removing Minimum and Maximum From Array :-
+
+def minimumDeletions(self, nums: List[int]) -> int:
+        n = len(nums)
+
+        min_val = float('inf')
+        max_val = float('-inf')
+
+        min_idx = 0
+        max_idx = 0
+
+        for i in range(n):
+            if nums[i] < min_val:
+                min_val = nums[i]
+                min_idx = i
+
+            if nums[i] > max_val:
+                max_val = nums[i]
+                max_idx = i
+
+        left = min(min_idx, max_idx)
+        right = max(min_idx, max_idx)
+
+        front = right + 1
+        back = n - left
+        mixed = (left + 1) + (n - right)
+
+        return min(front, back, mixed)
