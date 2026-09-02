@@ -1,0 +1,16 @@
+# Construct Uniform Parity Array I :-
+
+def uniformArray(self, nums1: list[int]) -> bool:
+        odd = 0
+        even = 0
+
+        for x in nums1:
+            if x % 2:
+                odd += 1
+            else:
+                even += 1
+
+        if odd == 0 or even == 0:
+            return True
+
+        return True
