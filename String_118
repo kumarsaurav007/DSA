@@ -1,0 +1,27 @@
+# Distinct Subsequences II :-
+
+def distinctSubseqII(self, s: str) -> int:
+        MOD = 10**9 + 7
+        memo = {}
+
+        def solve(idx):
+            if idx in memo:
+                return memo[idx]
+            
+            if idx == len(s):
+                return 0
+            
+            res = 0
+            visited = set()
+            
+            # Look forward and pick the first occurrence of each unique character
+            for i in range(idx, len(s)):
+                if s[i] not in visited:
+                    # 1 (for the char itself) + recursive subproblems
+                    res += (1 + solve(i + 1))
+                    visited.add(s[i])
+            
+            memo[idx] = res % MOD
+            return memo[idx]
+
+        return solve(0) % MOD
