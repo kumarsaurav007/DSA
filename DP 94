@@ -1,0 +1,30 @@
+# Find X Value of Array I :-
+
+def resultArray(self, nums: List[int], k: int) -> List[int]:
+        ans = [0] * k
+
+        # dp[r] = number of subarrays ending at the previous position
+        # whose product % k == r
+        dp = [0] * k
+
+        for num in nums:
+            a = num % k
+
+            # New subarrays ending at current position
+            ndp = [0] * k
+
+            # Subarray containing only nums[i]
+            ndp[a] += 1
+
+            # Extend every previous subarray
+            for r in range(k):
+                if dp[r]:
+                    ndp[(r * a) % k] += dp[r]
+
+            dp = ndp
+
+            # Add all subarrays ending here to the answer
+            for r in range(k):
+                ans[r] += dp[r]
+
+        return ans
