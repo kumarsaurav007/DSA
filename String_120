@@ -1,0 +1,39 @@
+# Brace Expansion II :-
+
+def braceExpansionII(self, expression: str) -> list[str]:
+        n = len(expression)
+
+        def parse(i):
+            result = set()
+            current = {""}
+
+            while i < n and expression[i] != '}':
+                ch = expression[i]
+
+                if ch == '{':
+                    part, i = parse(i + 1)
+
+                elif ch == ',':
+                    result |= current
+                    current = {""}
+                    i += 1
+                    continue
+
+                else:
+                    part = {ch}
+                    i += 1
+
+                # Concatenate current result with part
+                current = {a + b for a in current for b in part}
+
+            result |= current
+
+            # Skip '}'
+            if i < n and expression[i] == '}':
+                i += 1
+
+            return result, i
+
+        result, _ = parse(0)
+
+        return sorted(result)
