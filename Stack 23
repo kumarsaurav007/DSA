@@ -1,0 +1,12 @@
+# Minimum Add to Make Parentheses Valid :-
+
+def minAddToMakeValid(self, s: str) -> int:
+        st = [s[0]]
+
+        for i in range(1, len(s)):
+            if st and s[i] == ")" and st[-1] == "(":
+                st.pop()
+            else:
+                st.append(s[i])
+        
+        return len(st)
