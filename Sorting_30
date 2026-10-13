@@ -1,0 +1,14 @@
+# Maximum Alternating Sum of Squares :-
+
+def maxAlternatingSum(self, nums: List[int]) -> int:
+        nums = sorted(x * x for x in nums)
+        n = len(nums)
+        ans = 0
+
+        for i in range(n):
+            if i < (n + 1) // 2:
+                ans += nums[n - 1 - i]
+            else:
+                ans -= nums[n - 1 - i]
+
+        return ans
