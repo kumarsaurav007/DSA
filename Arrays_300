@@ -1,0 +1,16 @@
+# Minimum Operations to Sort a Permutation :-
+
+def minOperations(self, nums: List[int]) -> int:
+        n = len(nums)
+        k = nums[0]
+
+        if all(nums[i] == (k + i) % n for i in range(n)):
+            if k == 0:
+                return 0
+            return min(n - k, k + 2)
+
+        if all(nums[i] == (k - i) % n for i in range(n)):
+            return min(1 + (n - k - 1) % n,
+                       1 + (k + 1) % n)
+
+        return -1
