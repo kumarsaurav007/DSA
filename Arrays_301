@@ -1,0 +1,14 @@
+# Maximum K to Sort a Permutation :-
+
+n = len(nums)
+
+        if all(nums[i] == i for i in range(n)):
+            return 0
+
+        ans = (1 << 31) - 1
+
+        for i, x in enumerate(nums):
+            if i != x:
+                ans &= x
+
+        return ans
