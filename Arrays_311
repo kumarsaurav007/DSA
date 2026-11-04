@@ -1,0 +1,112 @@
+# Minimum Operations to Make Elements Within K Subarrays Equal :-
+
+from typing import List
+
+class Fenwick:
+    def __init__(self, n: int):
+        self.n = n
+        self.tree = [0] * (n + 1)
+
+    def add(self, i: int, delta: int) -> None:
+        while i <= self.n:
+            self.tree[i] += delta
+            i += i & -i
+
+    def query(self, i: int) -> int:
+        result = 0
+        while i > 0:
+            result += self.tree[i]
+            i -= i & -i
+        return result
+
+    # Returns the 1-indexed position of the k-th smallest value.
+    def kth(self, k: int) -> int:
+        idx = 0
+        bit = 1 << (self.n.bit_length() - 1)
+
+        while bit:
+            nxt = idx + bit
+            if nxt <= self.n and self.tree[nxt] < k:
+                idx = nxt
+                k -= self.tree[nxt]
+            bit >>= 1
+
+        return idx + 1
+
+
+class Solution:
+    def minOperations(self, nums: List[int], x: int, k: int) -> int:
+        n = len(nums)
+
+        # Coordinate compression
+        values = sorted(set(nums))
+        rank = {value: i + 1 for i, value in enumerate(values)}
+        size = len(values)
+
+        count_tree = Fenwick(size)
+        sum_tree = Fenwick(size)
+
+        def add_value(value: int, delta: int) -> None:
+            pos = rank[value]
+            count_tree.add(pos, delta)
+            sum_tree.add(pos, value * delta)
+
+        # Cost to make the current window equal to its median
+        def get_cost(total_sum: int) -> int:
+            median_pos = count_tree.kth((x + 1) // 2)
+            median = values[median_pos - 1]
+
+            count_left = count_tree.query(median_pos)
+            sum_left = sum_tree.query(median_pos)
+
+            count_right = x - count_left
+            sum_right = total_sum - sum_left
+
+            return (
+                median * count_left - sum_left
+                + sum_right - median * count_right
+            )
+
+        # Calculate the minimum cost for every window of size x
+        costs = []
+        window_sum = 0
+
+        for i in range(x):
+            add_value(nums[i], 1)
+            window_sum += nums[i]
+
+        costs.append(get_cost(window_sum))
+
+        for i in range(x, n):
+            outgoing = nums[i - x]
+            incoming = nums[i]
+
+            add_value(outgoing, -1)
+            add_value(incoming, 1)
+
+            window_sum += incoming - outgoing
+            costs.append(get_cost(window_sum))
+
+        # DP:
+        # prev[i] = minimum cost to select t-1 non-overlapping
+        # windows from nums[i:]
+        #
+        # curr[i] = minimum cost to select t windows from nums[i:]
+        INF = float("inf")
+        prev = [0] * (n + 1)
+
+        for t in range(1, k + 1):
+            curr = [INF] * (n + 1)
+
+            for i in range(n - 1, -1, -1):
+                # Skip index i
+                curr[i] = curr[i + 1]
+
+                # Select the window starting at i
+                if i + x <= n:
+                    cost = costs[i] + prev[i + x]
+                    curr[i] = min(curr[i], cost)
+
+            prev = curr
+
+        return prev[0]
