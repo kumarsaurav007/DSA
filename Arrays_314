@@ -1,0 +1,42 @@
+# Process Tasks Using Servers :-
+
+def assignTasks(self, servers: list[int], tasks: list[int]) -> list[int]:
+        # Available servers: (weight, server_id)
+        available = [(weight, i) for i, weight in enumerate(servers)]
+        heapq.heapify(available)
+
+        # Busy servers: (finish_time, weight, server_id)
+        busy = []
+
+        ans = [0] * len(tasks)
+        current_time = 0
+
+        for i, duration in enumerate(tasks):
+            # Time must never move backward.
+            current_time = max(current_time, i)
+
+            # Release all servers that have finished.
+            while busy and busy[0][0] <= current_time:
+                finish_time, weight, server_id = heapq.heappop(busy)
+                heapq.heappush(available, (weight, server_id))
+
+            # If no server is available, advance to the next finish time.
+            if not available:
+                current_time = busy[0][0]
+
+                while busy and busy[0][0] <= current_time:
+                    finish_time, weight, server_id = heapq.heappop(busy)
+                    heapq.heappush(available, (weight, server_id))
+
+            # Select the available server with the lowest weight,
+            # breaking ties by server ID.
+            weight, server_id = heapq.heappop(available)
+            ans[i] = server_id
+
+            finish_time = current_time + duration
+            heapq.heappush(
+                busy,
+                (finish_time, weight, server_id)
+            )
+
+        return ans
