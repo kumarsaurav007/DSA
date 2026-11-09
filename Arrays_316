@@ -1,0 +1,39 @@
+# Find Servers That Handled Most Number of Requests :-
+
+def busiestServers(self, k: int, arrival: list[int], load: list[int]) -> list[int]:
+        available = SortedList(range(k))
+        busy = []  # (finish_time, server_id)
+        handled = [0] * k
+
+        for i in range(len(arrival)):
+            current_time = arrival[i]
+
+            # Release servers whose requests have finished.
+            while busy and busy[0][0] <= current_time:
+                finish_time, server_id = heapq.heappop(busy)
+                available.add(server_id)
+
+            if not available:
+                continue
+
+            # Prefer server i % k or the next available server.
+            target = i % k
+            idx = available.bisect_left(target)
+
+            if idx == len(available):
+                idx = 0
+
+            server_id = available.pop(idx)
+
+            handled[server_id] += 1
+            finish_time = current_time + load[i]
+
+            heapq.heappush(busy, (finish_time, server_id))
+
+        max_handled = max(handled)
+
+        return [
+            server_id
+            for server_id, count in enumerate(handled)
+            if count == max_handled
+        ]
