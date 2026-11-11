@@ -1,0 +1,13 @@
+# Minimum Cost to Acquire Required Items :-
+
+def minimumCost(self, cost1: int, cost2: int, costBoth: int, need1: int, need2: int) -> int:
+        both = min(need1, need2)
+
+        # Buy type 3 items for the common requirement.
+        ans = both * min(costBoth, cost1 + cost2)
+
+        # Fulfill the remaining requirement individually.
+        ans += (need1 - both) * min(cost1, costBoth)
+        ans += (need2 - both) * min(cost2, costBoth)
+
+        return ans
