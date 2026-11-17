@@ -1,0 +1,48 @@
+# Minimum Changes to Make K Semi-palindromes :-
+
+def minimumChanges(self, s: str, k: int) -> int:
+        n = len(s)
+
+        # cost[i][j] = minimum changes to make s[i:j+1]
+        # a semi-palindrome.
+        cost = [[float('inf')] * n for _ in range(n)]
+
+        for i in range(n):
+            for j in range(i + 1, n):
+                length = j - i + 1
+
+                # Try every proper divisor of the substring length.
+                for d in range(1, length):
+                    if length % d != 0:
+                        continue
+
+                    changes = 0
+
+                    # Each residue class modulo d forms a palindrome.
+                    for r in range(d):
+                        group_len = length // d
+
+                        for p in range(group_len // 2):
+                            left = i + r + p * d
+                            right = i + r + (group_len - 1 - p) * d
+
+                            if s[left] != s[right]:
+                                changes += 1
+
+                    cost[i][j] = min(cost[i][j], changes)
+
+        # dp[p][j] = minimum changes to divide first j characters
+        # into exactly p semi-palindromic substrings.
+        INF = float('inf')
+        dp = [[INF] * (n + 1) for _ in range(k + 1)]
+        dp[0][0] = 0
+
+        for p in range(1, k + 1):
+            for j in range(2 * p, n + 1):
+                for i in range(2 * (p - 1), j - 1):
+                    dp[p][j] = min(
+                        dp[p][j],
+                        dp[p - 1][i] + cost[i][j - 1]
+                    )
+
+        return dp[k][n]
