@@ -1,0 +1,65 @@
+# Maximum Number of Items From Sale I :
+
+def maximumSaleItems(self, items: List[List[int]], budget: int) -> int:
+        n = len(items)
+
+        # Calculate the contribution of each item type
+        weights = []
+
+        for i in range(n):
+            factor = items[i][0]
+            count = 1
+
+            for j in range(n):
+                if i != j and items[j][0] % factor == 0:
+                    count += 1
+
+            weights.append(count)
+
+        # Group items by price
+        groups = [[] for _ in range(budget + 1)]
+
+        for i in range(n):
+            factor, price = items[i]
+
+            if price <= budget:
+                groups[price].append(weights[i])
+
+        # dp[c] = maximum contribution using exact cost c
+        dp = [-1] * (budget + 1)
+        dp[0] = 0
+
+        ans = 0
+
+        # Process minimum purchase price from high to low
+        for p in range(budget, 0, -1):
+
+            # At least one item of price p must be selected
+            with_p = [-1] * (budget + 1)
+
+            for weight in groups[p]:
+                for c in range(budget, p - 1, -1):
+
+                    best = with_p[c]
+
+                    if with_p[c - p] != -1:
+                        best = max(best, with_p[c - p] + weight)
+
+                    if dp[c - p] != -1:
+                        best = max(best, dp[c - p] + weight)
+
+                    with_p[c] = best
+
+            # Add additional copies of the cheapest selected item
+            for c in range(budget + 1):
+                if with_p[c] != -1:
+                    total = with_p[c] + (budget - c) // p
+                    ans = max(ans, total)
+
+            # Add all items of price p to the general knapsack
+            for weight in groups[p]:
+                for c in range(budget, p - 1, -1):
+                    if dp[c - p] != -1:
+                        dp[c] = max(dp[c], dp[c - p] + weight)
+
+        return ans
